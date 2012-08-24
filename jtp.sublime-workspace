@@ -1,0 +1,531 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fu",
+				"function"
+			],
+			[
+				"c",
+				"codeExp  (variable)"
+			],
+			[
+				"te",
+				"text  (argument)"
+			],
+			[
+				"co",
+				"codeBeginExp"
+			],
+			[
+				"h",
+				"helper"
+			],
+			[
+				"r",
+				"return"
+			],
+			[
+				"mod",
+				"model"
+			],
+			[
+				"b",
+				"bExp2  (variable)"
+			],
+			[
+				"cod",
+				"codeBlocks"
+			],
+			[
+				"pa",
+				"parse"
+			],
+			[
+				"wi",
+				"window"
+			],
+			[
+				"con",
+				"config"
+			],
+			[
+				"ro",
+				"routeVal"
+			],
+			[
+				"rout",
+				"routeVal"
+			],
+			[
+				"pat",
+				"pattern"
+			],
+			[
+				"rou",
+				"routeKeys"
+			],
+			[
+				"l",
+				"log"
+			],
+			[
+				"ma",
+				"matchExp"
+			],
+			[
+				"log",
+				"logText"
+			],
+			[
+				"mat",
+				"matchString"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"re",
+				"replaceExp"
+			],
+			[
+				"g",
+				"getMatchString  (function)"
+			],
+			[
+				"m",
+				"match"
+			],
+			[
+				"par",
+				"pattern"
+			],
+			[
+				"ha",
+				"handlers"
+			],
+			[
+				"get",
+				"getHander"
+			],
+			[
+				"han",
+				"handler"
+			],
+			[
+				"hand",
+				"handler"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"_",
+				"_response"
+			],
+			[
+				"_r",
+				"_request"
+			],
+			[
+				"f",
+				"fun	Function"
+			],
+			[
+				"s",
+				"src"
+			],
+			[
+				"cor",
+				"color"
+			],
+			[
+				"bo",
+				"bottom"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"di",
+				"display	zen:css_properties"
+			],
+			[
+				"lx",
+				"lxOption"
+			],
+			[
+				"tr",
+				"trans_result"
+			],
+			[
+				"dst",
+				"dstBox"
+			],
+			[
+				"d",
+				"data"
+			],
+			[
+				"bor",
+				"border"
+			],
+			[
+				"n",
+				"namespace"
+			],
+			[
+				"mo",
+				"mokit"
+			],
+			[
+				"t",
+				"this	$(this)"
+			],
+			[
+				"j",
+				"jQuery.ajaxSetup	jQuery.ajaxSetup"
+			],
+			[
+				"p",
+				"plugin	plugin (animation)"
+			],
+			[
+				"ba",
+				"background"
+			],
+			[
+				"tm",
+				"Terminal"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "test/test.html",
+			"settings":
+			{
+				"buffer_size": 696,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "/**\n * jtp 1.0 beta 1\n * jpt模板引擎，最简洁高效的js模板引擎\n * 作者：侯锋\n * 邮箱：admin@xhou.net\n */\nthis.jtp = {};\n(function(owner) {\n	/**\n	 * 辅助对象及方法\n	 * @type {Object}\n	 */\n	owner.helper = {\n		codeExp: new RegExp('(\\{\\%(.|\\n)*?\\%\\})', 'gim'),\n		codeBeginExp: new RegExp('\\{\\%', 'gim'),\n		codeEndExp: new RegExp('\\%\\}', 'gim'),\n		replaceChar: function(text) {\n			text = text.replace(new RegExp('\\\\{1}', 'gim'), '\\\\\\\\');\n			text = text.replace(new RegExp('(\\n{1})', 'gim'), '\\\\n');\n			text = text.replace(new RegExp('\\\"{1}', 'gim'), '\\\\\"');\n			return text;\n		},\n		tryInvoke: function(fn) {\n			try {\n				return fn();\n			} catch (ex) {}\n		}\n	};\n	/**\n	 * 编译一个模板\n	 * @param  {String} source 模板源字符串\n	 * @return {Function}      编译后的模板函数\n	 */\n	owner.complete = function(source) {\n		owner.helper.codeExp.lastIndex = 0;\n		owner.helper.codeBeginExp.lastIndex = 0;\n		owner.helper.codeEndExp.lastIndex = 0;\n		var buffer = ['var jtp={buffer:[],print:function(x){jtp.buffer.push(x);}};var $=jtp.print;'];\n		var codeBlocks = source.match(owner.helper.codeExp);\n		var textBlocks = source.replace(owner.helper.codeExp, '▎').split('▎');\n		for (var i = 0; i < textBlocks.length; i++) {\n			buffer.push('jtp.print(\"' + owner.helper.replaceChar(textBlocks[i]) + '\");');\n			if (codeBlocks && codeBlocks[i]) buffer.push(codeBlocks[i].replace(owner.helper.codeBeginExp, '').replace(owner.helper.codeEndExp, '') + ';');\n		};\n		buffer.push('return jtp.buffer.join(\"\");');\n		var fn = function() {};\n		owner.helper.tryInvoke(function() {\n			fn = new Function(buffer.join(''));\n		});\n		return function(model) {\n			model = model || owner;\n			return owner.helper.tryInvoke(function() {\n				return fn.call(model, model);\n			});\n		};\n	};\n	/**\n	 * 争瘊\n	 * @param  {[type]} source [description]\n	 * @param  {[type]} model  [description]\n	 * @return {[type]}        [description]\n	 */\n	owner.parse = function(source, model) {\n		var fn = owner.complete(source);\n		return fn(model);\n	};\n})(this.exports || this.jtp);\n",
+			"file": "src/jtp.js",
+			"file_size": 2065,
+			"file_write_time": 1345827430000000,
+			"settings":
+			{
+				"buffer_size": 1957,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 116.0,
+		"selected_items":
+		[
+			[
+				"form",
+				"Format: Javascript"
+			],
+			[
+				"pci",
+				"Package Control: Install Package"
+			],
+			[
+				"pcr",
+				"Package Control: Remove Package"
+			],
+			[
+				"git",
+				"Git: Init"
+			],
+			[
+				"pci	",
+				"Package Control: Install Package"
+			],
+			[
+				"b",
+				"Bookmarks: Clear All"
+			],
+			[
+				"bra",
+				"Bookmarks: Clear All"
+			],
+			[
+				"",
+				"About"
+			],
+			[
+				"zc",
+				"Set Syntax: ZenCoding"
+			],
+			[
+				"zce",
+				"Zen Coding: Evaluate math expression"
+			],
+			[
+				"z",
+				"Zen Coding: Evaluate math expression"
+			],
+			[
+				"pa",
+				"Package Control: Install Package"
+			],
+			[
+				"f",
+				"Format: Javascript"
+			],
+			[
+				"page",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 494.0
+	},
+	"console":
+	{
+		"height": 187.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/houfeng/Desktop/jtp.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/lib/jade.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/handlers.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/lib/markdown.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/data/test.md",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/config.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/global.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/routeMgr.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/server.js",
+		"/Users/houfeng/Desktop/Dev/OBT/OBT.Mobile/scripts/lib/jquery.repeater.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/start.sh",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/lib/global",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/handler.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/markdown.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/data/index.json",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/lang/zh-cn.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/bak.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/lanuanges/zh-cn.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/lanuanges/zh-cn",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/config.js",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/articles/test.md",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/templates/index.html",
+		"/Users/houfeng/Desktop/Dev/项目/beelog/server.js",
+		"/Users/houfeng/Desktop/Dev/项目/joop/src/joop.js",
+		"/Users/houfeng/Desktop/Dev/项目/joop/test/joopTest.js",
+		"/Users/houfeng/Desktop/Dev/项目/joop/joop.sublime-project",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/houfeng/Desktop/Dev/项目/joop/test/qunit/helper.js",
+		"/Users/houfeng/Desktop/Dev/项目/joop/test/index.html",
+		"/Users/houfeng/Desktop/快译助手/popup.html",
+		"/Users/houfeng/Desktop/快译助手/styles/default.css",
+		"/Users/houfeng/Desktop/快译助手/manifest.json",
+		"/Users/houfeng/Desktop/快译助手/scripts/default.js",
+		"/Users/houfeng/Desktop/Dev/项目/jHelper/src/tween.js",
+		"/Users/houfeng/Desktop/Dev/项目/jHelper/src/joop.js",
+		"/Users/houfeng/Desktop/Dev/项目/mokit/mokit/scripts/page.js",
+		"/Users/houfeng/Desktop/Dev/项目/mokit/mokit/scripts/main.js",
+		"/Users/houfeng/Desktop/Dev/项目/mokit/mokit/$test/joop.js",
+		"/Users/houfeng/Desktop/Dev/项目/mokit/mokit/index.js",
+		"/Users/houfeng/Desktop/joop.js",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/SublimeCodeIntel/Default (OSX).sublime-mousemap",
+		"/Users/houfeng/Desktop/a.txt",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/JavaScript.sublime-settings",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/BracketHighlighter.sublime-settings",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/sublime_tfs.sublime-settings",
+		"/Users/houfeng/Desktop/desktop.ini",
+		"/Users/houfeng/.viminfo"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"tp",
+			"dlkafjlaskjf"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "test/test.html",
+					"settings":
+					{
+						"buffer_size": 696,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								696,
+								696
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/jtp.js",
+					"settings":
+					{
+						"buffer_size": 1957,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1406,
+								1406
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 152.0
+	},
+	"output.jsconsole_view":
+	{
+		"height": 118.0
+	},
+	"output.jshint_view":
+	{
+		"height": 0.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"",
+				"untitled"
+			],
+			[
+				"un",
+				"untitled"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 239.0,
+	"status_bar_visible": true
+}
