@@ -55,10 +55,10 @@ this.jtp = {};
 		};
 	};
 	/**
-	 * 争瘊
-	 * @param  {[type]} source [description]
-	 * @param  {[type]} model  [description]
-	 * @return {[type]}        [description]
+	 * 解析模板	
+	 * @param  {String} source  模板源字符串
+	 * @param  {Objtect} model  数据模型
+	 * @return {String}         解析结果
 	 */
 	owner.parse = function(source, model) {
 		var fn = owner.complete(source);
