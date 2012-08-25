@@ -207,25 +207,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "test/test.html",
-			"settings":
-			{
-				"buffer_size": 696,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "/**\n * jtp 1.0 beta 1\n * jpt模板引擎，最简洁高效的js模板引擎\n * 作者：侯锋\n * 邮箱：admin@xhou.net\n */\nthis.jtp = {};\n(function(owner) {\n	/**\n	 * 辅助对象及方法\n	 * @type {Object}\n	 */\n	owner.helper = {\n		codeExp: new RegExp('(\\{\\%(.|\\n)*?\\%\\})', 'gim'),\n		codeBeginExp: new RegExp('\\{\\%', 'gim'),\n		codeEndExp: new RegExp('\\%\\}', 'gim'),\n		replaceChar: function(text) {\n			text = text.replace(new RegExp('\\\\{1}', 'gim'), '\\\\\\\\');\n			text = text.replace(new RegExp('(\\n{1})', 'gim'), '\\\\n');\n			text = text.replace(new RegExp('\\\"{1}', 'gim'), '\\\\\"');\n			return text;\n		},\n		tryInvoke: function(fn) {\n			try {\n				return fn();\n			} catch (ex) {}\n		}\n	};\n	/**\n	 * 编译一个模板\n	 * @param  {String} source 模板源字符串\n	 * @return {Function}      编译后的模板函数\n	 */\n	owner.complete = function(source) {\n		owner.helper.codeExp.lastIndex = 0;\n		owner.helper.codeBeginExp.lastIndex = 0;\n		owner.helper.codeEndExp.lastIndex = 0;\n		var buffer = ['var jtp={buffer:[],print:function(x){jtp.buffer.push(x);}};var $=jtp.print;'];\n		var codeBlocks = source.match(owner.helper.codeExp);\n		var textBlocks = source.replace(owner.helper.codeExp, '▎').split('▎');\n		for (var i = 0; i < textBlocks.length; i++) {\n			buffer.push('jtp.print(\"' + owner.helper.replaceChar(textBlocks[i]) + '\");');\n			if (codeBlocks && codeBlocks[i]) buffer.push(codeBlocks[i].replace(owner.helper.codeBeginExp, '').replace(owner.helper.codeEndExp, '') + ';');\n		};\n		buffer.push('return jtp.buffer.join(\"\");');\n		var fn = function() {};\n		owner.helper.tryInvoke(function() {\n			fn = new Function(buffer.join(''));\n		});\n		return function(model) {\n			model = model || owner;\n			return owner.helper.tryInvoke(function() {\n				return fn.call(model, model);\n			});\n		};\n	};\n	/**\n	 * 争瘊\n	 * @param  {[type]} source [description]\n	 * @param  {[type]} model  [description]\n	 * @return {[type]}        [description]\n	 */\n	owner.parse = function(source, model) {\n		var fn = owner.complete(source);\n		return fn(model);\n	};\n})(this.exports || this.jtp);\n",
-			"file": "src/jtp.js",
-			"file_size": 2065,
-			"file_write_time": 1345827430000000,
-			"settings":
-			{
-				"buffer_size": 1957,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -307,6 +288,8 @@
 	},
 	"file_history":
 	[
+		"/Users/houfeng/Desktop/Dev/项目/jtp/test/test.html",
+		"/Users/houfeng/Desktop/Dev/项目/jtp/src/jtp.js",
 		"/Users/houfeng/Desktop/jtp.js",
 		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/lib/jade.js",
 		"/Users/houfeng/Desktop/Dev/项目/beelog/bin/handlers.js",
@@ -390,63 +373,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "test/test.html",
-					"settings":
-					{
-						"buffer_size": 696,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								696,
-								696
-							]
-						],
-						"settings":
-						{
-							"auto_name": "",
-							"syntax": "Packages/HTML/HTML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "src/jtp.js",
-					"settings":
-					{
-						"buffer_size": 1957,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1406,
-								1406
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
