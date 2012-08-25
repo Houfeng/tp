@@ -35,6 +35,7 @@ var jtp = {};
 	 * @return {Function}      编译后的模板函数
 	 */
 	owner.compile = function(source) {
+		source = source || '';
 		owner.helper.codeExp.lastIndex = 0;
 		owner.helper.codeBeginExp.lastIndex = 0;
 		owner.helper.codeEndExp.lastIndex = 0;
@@ -70,3 +71,4 @@ var jtp = {};
 		return fn(model);
 	};
 })(typeof exports === 'undefined' ? jtp : exports);
+
