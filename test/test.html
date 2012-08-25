@@ -17,7 +17,7 @@
  				return document.getElementById(id);
  			};
  			$get('_src').onkeyup=function () {
- 				var fn=jtp.complete($get('_src').value);
+ 				var fn=jtp.compile($get('_src').value);
  				$get('_dst').value=fn({name:'houfeng'});
  			}
  		</script>

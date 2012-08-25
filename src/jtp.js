@@ -5,16 +5,18 @@
  * 作者：侯锋
  * 邮箱：admin@xhou.net
  */
-this.jtp = {};
+var jtp = {};
 (function(owner) {
+	owner.codeBegin = '\<\@';
+	owner.codeEnd = '\@\>';
 	/**
 	 * 辅助对象及方法
 	 * @type {Object}
 	 */
 	owner.helper = {
-		codeExp: new RegExp('(\{\%(.|\n)*?\%\})', 'gim'),
-		codeBeginExp: new RegExp('\{\%', 'gim'),
-		codeEndExp: new RegExp('\%\}', 'gim'),
+		codeExp: new RegExp('(' + owner.codeBegin + '(.|\n)*?' + owner.codeEnd + ')', 'gim'),
+		codeBeginExp: new RegExp(owner.codeBegin, 'gim'),
+		codeEndExp: new RegExp(owner.codeEnd, 'gim'),
 		replaceChar: function(text) {
 			text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 			text = text.replace(new RegExp('(\n{1})', 'gim'), '\\n');
@@ -32,31 +34,33 @@ this.jtp = {};
 	 * @param  {String} source 模板源字符串
 	 * @return {Function}      编译后的模板函数
 	 */
-	owner.complete = function(source) {
+	owner.compile = function(source) {
 		owner.helper.codeExp.lastIndex = 0;
 		owner.helper.codeBeginExp.lastIndex = 0;
 		owner.helper.codeEndExp.lastIndex = 0;
 		var buffer = ['var jtp={buffer:[],print:function(x){jtp.buffer.push(x);}};var $=jtp.print;'];
 		var codeBlocks = source.match(owner.helper.codeExp);
 		var textBlocks = source.replace(owner.helper.codeExp, '▎').split('▎');
-		for (var i = 0; i < textBlocks.length; i++) {
-			buffer.push('jtp.print("' + owner.helper.replaceChar(textBlocks[i]) + '");');
-			if (codeBlocks && codeBlocks[i]) buffer.push(codeBlocks[i].replace(owner.helper.codeBeginExp, '').replace(owner.helper.codeEndExp, '') + ';');
+		for (var _index = 0; _index < textBlocks.length; _index++) {
+			buffer.push('jtp.print("' + owner.helper.replaceChar(textBlocks[_index]) + '");');
+			if (codeBlocks && codeBlocks[_index]) {
+				buffer.push(codeBlocks[_index].replace(owner.helper.codeBeginExp, '').replace(owner.helper.codeEndExp, '') + ';');
+			}
 		};
 		buffer.push('return jtp.buffer.join("");');
-		var fn = function() {};
+		var _fn = function() {};
 		owner.helper.tryInvoke(function() {
-			fn = new Function(buffer.join(''));
+			_fn = new Function(buffer.join(''));
 		});
 		return function(model) {
-			model = model || owner;
+			model = model || owner || {};
 			return owner.helper.tryInvoke(function() {
-				return fn.call(model, model);
+				return _fn.call(model, model);
 			});
 		};
 	};
 	/**
-	 * 解析模板	
+	 * 解析模板
 	 * @param  {String} source  模板源字符串
 	 * @param  {Objtect} model  数据模型
 	 * @return {String}         解析结果
@@ -65,4 +69,4 @@ this.jtp = {};
 		var fn = owner.complete(source);
 		return fn(model);
 	};
-})(this.exports || this.jtp);
+})(typeof exports === 'undefined' ? jtp : exports);
