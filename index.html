@@ -31,7 +31,57 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>最轻量，简洁，高效的javascript模板引擎</h3>
+        <h3>欢迎来到jtp的世界</h3>
+
+<p>欢迎使用jtp! 最轻量，简洁，高效的javascript模板引擎！</p>
+
+<blockquote>
+<p>如同“jtp”的名字，轻量、简洁、高效是jtp的哲学！</p>
+</blockquote>
+
+<h3>简介</h3>
+
+<pre><code>+ 轻量，jtp是目前能见到的javascript模板引擎中最轻量之一，只有一个不足4k的文件。
++ 简洁，jtp的语法非常简单，对于一个熟悉html、js的开发人员来说：学习难度为0。
++ 高效，jtp支持模板预编译，快于任何一个你所见过的javascript模板引擎。
++ 另外，jtp同时支持在浏览器环境使用及服务端javascript环境(Node.js)使用。
+</code></pre>
+
+<h3>支持</h3>
+
+<pre><code>+ 您可以发邮件到 admin@xhou.net
++ 或者访问 http://www.houfeng.net
++ 关注微博 http://weibo.com/houfeng
+</code></pre>
+
+<h3>使用指南</h3>
+
+<h5>如何使用？</h5>
+
+<pre><code>+ 下载jtp
++ 将jtp.js或jtp-min.js放到项目中合适的位置。
++ 在相关页面用&lt;script src='jtp的url'&gt;&lt;/script&gt;引入jtp。
+</code></pre>
+
+<h5>解析(jtp.parse)</h5>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">html</span><span class="o">=</span><span class="s1">'&lt;div&gt;My name is &lt;@$(this.name)@&gt;&lt;/div&gt;'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">rs</span><span class="o">=</span><span class="nx">jtp</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">html</span><span class="p">,{</span><span class="nx">name</span><span class="o">:</span><span class="s1">'jtp'</span><span class="p">});</span>
+</pre></div>
+
+<pre><code>rs: “&lt;div&gt;My name is jtp&lt;/div&gt;”
+</code></pre>
+
+<h4>编译(jtp.complite)</h4>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">html</span><span class="o">=</span><span class="s1">'&lt;div&gt;My name is &lt;@$(this.name)@&gt;&lt;/div&gt;'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">fn</span><span class="o">=</span><span class="nx">jtp</span><span class="p">.</span><span class="nx">complite</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">rs</span><span class="o">=</span><span class="nx">fn</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span><span class="s1">'jtp'</span><span class="p">});</span>
+</pre></div>
+
+<pre><code>fn: 编译结果，可以暂存以供调用。
+rs: “&lt;div&gt;My name is jtp&lt;/div&gt;”
+</code></pre>
       </section>
     </div>
 
