@@ -1,0 +1,84 @@
+<html>
+	<head>
+ 		<title>jtp demo</title>
+ 		<style type="text/css">
+ 			body{ background-color: #e3e3e5;}
+ 			h1{ text-align: center; font-weight: bold; font-style: italic;}
+ 			textarea{
+ 				outline: none;
+ 				padding: 5px;
+			    font-size: 14px;
+			    border: 1px solid #ccc;
+			    resize: none;
+			    border-radius: 0.1em;
+			    box-shadow: inset 1px 1px 2px rgba(10,10,10,.1);
+ 			}
+ 			#_demo{
+ 				width: 815px;
+ 				margin: auto auto;
+ 			}
+        	#_dst, #_src{
+        		width: 400px;
+        		height: 350px;
+        		resize:none;
+        	}
+        	#_data{
+        		width:806px;
+        		height:30px;
+        		resize: none;
+        	}
+        	.box{
+        		float: left;
+        		margin: 3px;
+        	}
+ 		</style>
+	</head>
+	<body>
+		<h1>jtp demo</h1>
+		<div id='_demo'>
+				<div class="box">data:<br/>
+				<textarea id="_data" placeholder='data ...'>
+{name:'jtp dome',cityList:['beijing','shanghai']}
+				</textarea></div>
+		<div class="box">template:<br/>
+		<textarea id="_src" placeholder='template source ...'>
+<html>
+	<head>
+		<title><@$(this.name)@></title>
+	</head>
+	<body>
+		<h3>city list</h3>
+		<ul>
+			<@for(var i in this.cityList){@>
+				<li><@$(this.cityList[i])@><li>
+			<@}@>
+		</ul>
+	</body>
+</html>
+		</textarea>	
+	</div>
+		<div class="box">resoult:<br/>
+		<textarea id="_dst" placeholder='result ...' readonly='readonly'></textarea>
+	</div>
+		</div>
+		<script type="text/javascript" src="src/jtp.js"></script>
+ 		<script type="text/javascript">
+ 			var $get=function (id) {
+ 				return document.getElementById(id);
+ 			};
+ 			var $excute=function () {
+ 				try{
+	 				var data=null;
+	 				try{
+	 					data=eval('('+$get('_data').value+')');
+	 				}catch(ex){}
+	 				var fn=jtp.compile($get('_src').value);
+	 				$get('_dst').value=fn(data);
+ 				}catch(ex){}
+ 			}
+ 			$get('_src').onkeyup=$excute;
+ 			$get('_data').onkeyup=$excute;
+ 			$get('_src').onkeyup();
+ 		</script>
+	</body>
+</html>
