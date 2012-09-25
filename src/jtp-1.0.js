@@ -7,16 +7,13 @@
  */
 var jtp = {};
 (function(owner) {
-	owner.codeBegin = '\<\@';
-	owner.codeEnd = '\@\>';
 	/**
 	 * 辅助对象及方法
 	 * @type {Object}
 	 */
 	owner.helper = {
-		codeExp: new RegExp('(' + owner.codeBegin + '(.|\n)*?' + owner.codeEnd + ')', 'gim'),
-		codeBeginExp: new RegExp(owner.codeBegin, 'gim'),
-		codeEndExp: new RegExp(owner.codeEnd, 'gim'),
+		codeBegin: '\<\@',
+		codeEnd: '\@\>',
 		replaceChar: function(text) {
 			text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 			text = text.replace(new RegExp('(\n{1})', 'gim'), '\\n');
@@ -34,18 +31,23 @@ var jtp = {};
 	 * @param  {String} source 模板源字符串
 	 * @return {Function}      编译后的模板函数
 	 */
-	owner.compile = function(source) {
+	owner.compile = function(source, option) {
 		source = source || '';
-		owner.helper.codeExp.lastIndex = 0;
-		owner.helper.codeBeginExp.lastIndex = 0;
-		owner.helper.codeEndExp.lastIndex = 0;
+		option = option || {};
+		option.codeBegin = option.codeBegin || owner.helper.codeBegin;
+		option.codeEnd = option.codeEnd || owner.helper.codeEnd;
+		//
+		var codeBeginExp = new RegExp(option.codeBegin, 'gim');
+		var codeEndExp = new RegExp(option.codeEnd, 'gim');
+		var codeExp = new RegExp('(' + option.codeBegin + '(.|\n)*?' + option.codeEnd + ')', 'gim');
+		//
 		var buffer = ['var jtp={buffer:[],print:function(x){jtp.buffer.push(x);}};var $=jtp.print;'];
-		var codeBlocks = source.match(owner.helper.codeExp);
-		var textBlocks = source.replace(owner.helper.codeExp, '▎').split('▎');
-		for (var _index = 0; _index < textBlocks.length; _index++) {
-			buffer.push('jtp.print("' + owner.helper.replaceChar(textBlocks[_index]) + '");');
-			if (codeBlocks && codeBlocks[_index]) {
-				buffer.push(codeBlocks[_index].replace(owner.helper.codeBeginExp, '').replace(owner.helper.codeEndExp, '') + ';');
+		var codeBlocks = source.match(codeExp);
+		var textBlocks = source.replace(codeExp, '▎').split('▎');
+		for (var i = 0; i < textBlocks.length; i++) {
+			buffer.push('jtp.print("' + owner.helper.replaceChar(textBlocks[i]) + '");');
+			if (codeBlocks && codeBlocks[i]) {
+				buffer.push(codeBlocks[i].replace(codeBeginExp, '').replace(codeEndExp, '') + ';');
 			}
 		};
 		buffer.push('return jtp.buffer.join("");');
@@ -66,9 +68,8 @@ var jtp = {};
 	 * @param  {Objtect} model  数据模型
 	 * @return {String}         解析结果
 	 */
-	owner.parse = function(source, model) {
-		var fn = owner.complete(source);
+	owner.parse = function(source, model, option) {
+		var fn = owner.complete(source, option);
 		return fn(model);
 	};
 })(typeof exports === 'undefined' ? jtp : exports);
-
