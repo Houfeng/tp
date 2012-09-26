@@ -16,7 +16,8 @@ var jtp = {};
 		codeEnd: '\@\>',
 		replaceChar: function(text) {
 			text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
-			text = text.replace(new RegExp('(\n{1})', 'gim'), '\\n');
+			text = text.replace(new RegExp('\r{1}', 'gim'), '');
+			text = text.replace(new RegExp('\n{1}', 'gim'), '\\n');
 			text = text.replace(new RegExp('\"{1}', 'gim'), '\\"');
 			return text;
 		},
@@ -69,7 +70,7 @@ var jtp = {};
 	 * @return {String}         解析结果
 	 */
 	owner.parse = function(source, model, option) {
-		var fn = owner.complete(source, option);
+		var fn = owner.compile(source, option);
 		return fn(model);
 	};
 })(typeof exports === 'undefined' ? jtp : exports);
