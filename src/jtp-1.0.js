@@ -56,12 +56,14 @@ var jtp = {};
 		owner.helper.tryInvoke(function() {
 			_fn = new Function(buffer.join(''));
 		});
-		return function(model) {
+		var fn= function(model) {
 			model = model || owner || {};
 			return owner.helper.tryInvoke(function() {
 				return _fn.call(model, model);
 			});
 		};
+		fn.src=_fn;
+		return fn;
 	};
 	/**
 	 * 解析模板
