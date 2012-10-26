@@ -24,9 +24,10 @@ var jtp = {};
 		tryInvoke: function(fn) {
 			try {
 				return fn();
-			} catch (ex) {}
+			} catch(ex) {}
 		}
 	};
+	owner.debugMode = false;
 	/**
 	 * 编译一个模板
 	 * @param  {String} source 模板源字符串
@@ -45,25 +46,30 @@ var jtp = {};
 		var buffer = ['var jtp={buffer:[],print:function(x){jtp.buffer.push(x);}};var $=jtp.print;'];
 		var codeBlocks = source.match(codeExp);
 		var textBlocks = source.replace(codeExp, '▎').split('▎');
-		for (var i = 0; i < textBlocks.length; i++) {
+		for(var i = 0; i < textBlocks.length; i++) {
 			buffer.push('jtp.print("' + owner.helper.replaceChar(textBlocks[i]) + '");');
-			if (codeBlocks && codeBlocks[i]) {
+			if(codeBlocks && codeBlocks[i]) {
 				buffer.push(codeBlocks[i].replace(codeBeginExp, '').replace(codeEndExp, '') + ';');
 			}
 		};
 		buffer.push('return jtp.buffer.join("");');
-		var _fn = function() {};
+		var _fn_src = function() {};
 		owner.helper.tryInvoke(function() {
-			_fn = new Function(buffer.join(''));
+			_fn_src = new Function(buffer.join(''));
 		});
-		var fn= function(model) {
-			model = model || owner || {};
-			return owner.helper.tryInvoke(function() {
-				return _fn.call(model, model);
-			});
-		};
-		fn.src=_fn;
-		return fn;
+		var _fn_debug = function(model) {
+				model = model || owner || {};
+				return _fn_src.call(model, model) || '';
+			};
+		var _fn_release = function(model) {
+				model = model || owner || {};
+				return owner.helper.tryInvoke(function() {
+					return _fn_src.call(model, model) || '';
+				});
+			};
+		var _fn = owner.debugMode ? _fn_debug : _fn_release;
+		_fn.src = _fn_src;
+		return _fn;
 	};
 	/**
 	 * 解析模板
