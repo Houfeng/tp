@@ -24,7 +24,14 @@ var jtp = {};
 		tryInvoke: function(fn) {
 			try {
 				return fn();
-			} catch(ex) {}
+			} catch(ex) {
+				if(owner.debugMode) {
+					throw ex;
+				}
+				else{
+					return ex.description || ex.message;
+				}
+			}
 		}
 	};
 	owner.debugMode = false;
@@ -57,17 +64,12 @@ var jtp = {};
 		owner.helper.tryInvoke(function() {
 			_fn_src = new Function(buffer.join(''));
 		});
-		var _fn_debug = function(model) {
-				model = model || owner || {};
-				return _fn_src.call(model, model) || '';
-			};
-		var _fn_release = function(model) {
+		var _fn = function(model) {
 				model = model || owner || {};
 				return owner.helper.tryInvoke(function() {
 					return _fn_src.call(model, model) || '';
 				});
 			};
-		var _fn = owner.debugMode ? _fn_debug : _fn_release;
 		_fn.src = _fn_src;
 		return _fn;
 	};
