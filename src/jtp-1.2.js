@@ -1,5 +1,5 @@
 /**
- * jtp 1.0 beta 1
+ * jtp 1.2
  * jtp 模板引擎，最简洁高效的js模板引擎
  * jtp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
@@ -12,29 +12,37 @@ var jtp = {};
 	 * @type {Object}
 	 */
 	owner.helper = {
-		codeBegin: '\<\@',
-		codeEnd: '\@\>',
-		replaceChar: function(text) {
+		outTransferred: function(text) {
 			text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 			text = text.replace(new RegExp('\r{1}', 'gim'), '');
 			text = text.replace(new RegExp('\n{1}', 'gim'), '\\n');
 			text = text.replace(new RegExp('\"{1}', 'gim'), '\\"');
 			return text;
 		},
+		inTransferred: function(text) {
+			return text.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+		},
 		tryInvoke: function(fn) {
 			try {
 				return fn();
 			} catch(ex) {
-				if(owner.debugMode) {
+				if(owner.option.debugMode) {
 					throw ex;
-				}
-				else{
+				} else {
 					return ex.description || ex.message;
 				}
 			}
 		}
 	};
-	owner.debugMode = false;
+	/**
+	 * 全局选项
+	 * @type {Object}
+	 */
+	owner.option = {
+		debugMode: false,
+		codeBegin: '\{\#',
+		codeEnd: '\#\}'
+	};
 	/**
 	 * 编译一个模板
 	 * @param  {String} source 模板源字符串
@@ -43,18 +51,18 @@ var jtp = {};
 	owner.compile = function(source, option) {
 		source = source || '';
 		option = option || {};
-		option.codeBegin = option.codeBegin || owner.helper.codeBegin;
-		option.codeEnd = option.codeEnd || owner.helper.codeEnd;
+		option.codeBegin = option.codeBegin || owner.option.codeBegin;
+		option.codeEnd = option.codeEnd || owner.option.codeEnd;
 		//
 		var codeBeginExp = new RegExp(option.codeBegin, 'gim');
 		var codeEndExp = new RegExp(option.codeEnd, 'gim');
 		var codeExp = new RegExp('(' + option.codeBegin + '(.|\n)*?' + option.codeEnd + ')', 'gim');
 		//
-		var buffer = ['var jtp={buffer:[],print:function(x){jtp.buffer.push(x);}};var $=jtp.print;'];
+		var buffer = ['var jtp={buffer:[],out:function(x){jtp.buffer.push(x);}};var $=jtp.out;'];
 		var codeBlocks = source.match(codeExp);
 		var textBlocks = source.replace(codeExp, '▎').split('▎');
 		for(var i = 0; i < textBlocks.length; i++) {
-			buffer.push('jtp.print("' + owner.helper.replaceChar(textBlocks[i]) + '");');
+			buffer.push('jtp.out("' + owner.helper.outTransferred(textBlocks[i]) + '");');
 			if(codeBlocks && codeBlocks[i]) {
 				buffer.push(codeBlocks[i].replace(codeBeginExp, '').replace(codeEndExp, '') + ';');
 			}
@@ -65,7 +73,7 @@ var jtp = {};
 			_fn_src = new Function(buffer.join(''));
 		});
 		var _fn = function(model) {
-				model = model || owner || {};
+				model = model || {};
 				return owner.helper.tryInvoke(function() {
 					return _fn_src.call(model, model) || '';
 				});
@@ -82,5 +90,24 @@ var jtp = {};
 	owner.parse = function(source, model, option) {
 		var fn = owner.compile(source, option);
 		return fn(model);
+	};
+	/**
+	 * 在浏览器环境，扩展原生元素；
+	 * @return {Object} 扩展的功能实体；
+	 */
+	owner.element = function(element, option) {
+		if(!element) return;
+		if(!element.jtp) {
+			element.jtp = {};
+			element.jtp.$exec = owner.compile(owner.helper.inTransferred(element.innerHTML), option);
+			element.innerHTML = "";
+			element.jtp.bind = function(model) {
+				element.innerHTML = element.jtp.$exec(model);
+			};
+			element.jtp.append = function(model) {
+				element.innerHTML += element.jtp.$exec(model);
+			};
+		}
+		return element.jtp;
 	};
 })(typeof exports === 'undefined' ? jtp : exports);

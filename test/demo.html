@@ -13,8 +13,9 @@
 			    border-radius: 0.1em;
 			    box-shadow: inset 1px 1px 2px rgba(10,10,10,.1);
  			}
- 			#_demo{
+ 			._demo{
  				width: 815px;
+ 				clear: both;
  				margin: auto auto;
  			}
         	#_dst, #_src{
@@ -35,7 +36,7 @@
 	</head>
 	<body>
 		<h1>jtp demo</h1>
-		<div id='_demo'>
+		<div class='_demo'>
 				<div class="box">data:<br/>
 				<textarea id="_data" placeholder='data ...'>
 {name:'jtp dome',cityList:['beijing','shanghai']}
@@ -44,28 +45,36 @@
 		<textarea id="_src" placeholder='template source ...'>
 <html>
 	<head>
-		<title><@$(this.name)@></title>
+		<title>{# $(this.name) #}</title>
 	</head>
 	<body>
 		<h3>city list</h3>
 		<ul>
-			<@for(var i in this.cityList){@>
-				<li><@$(this.cityList[i])@><li>
-			<@}@>
+			{# for(var i in this.cityList){ #}
+				<li>{# $(this.cityList[i]) #}<li>
+			{# } #}
 		</ul>
 	</body>
 </html>
 		</textarea>	
 	</div>
-		<div class="box">resoult:<br/>
+	<div class="box">resoult:<br/>
 		<textarea id="_dst" placeholder='result ...' readonly='readonly'></textarea>
 	</div>
 		</div>
-		<script type="text/javascript" src="../src/jtp-1.0.js"></script>
+<div class="_demo">
+	<ul id="temp">
+		{# for(var i in this){ #}
+		<li>{# $(this[i]) #}</li>
+		{# } #}
+	</ul>
+</div>
+		<script type="text/javascript" src="../src/jtp-1.2.js"></script>
  		<script type="text/javascript">
  			var $get=function (id) {
  				return document.getElementById(id);
  			};
+ 			//demo 1
  			var $excute=function () {
  				try{
 	 				var data=null;
@@ -79,6 +88,9 @@
  			$get('_src').onkeyup=$excute;
  			$get('_data').onkeyup=$excute;
  			$get('_src').onkeyup();
+ 			//demo 2
+ 			jtp.element($get('temp')).bind(["item-1","item-2","item-3"]);
+
  		</script>
 	</body>
 </html>
