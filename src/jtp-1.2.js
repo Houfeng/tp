@@ -5,6 +5,7 @@
  * 作者：侯锋
  * 邮箱：admin@xhou.net
  */
+
 var jtp = {};
 (function(owner) {
 	/**
