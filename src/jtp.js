@@ -8,14 +8,16 @@
  */
 
 this.jtp = {};
-
 (function(owner) {
-
+	
 	/**
 	 * 辅助对象及方法
 	 * @type {Object}
 	 */
 	var utils = {
+		/**
+		 * 输出转义
+		 */
 		outTransferred: function(text) {
 			text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 			text = text.replace(new RegExp('\r{1}', 'gim'), '');
@@ -23,18 +25,20 @@ this.jtp = {};
 			text = text.replace(new RegExp('\"{1}', 'gim'), '\\"');
 			return text;
 		},
+		/**
+		 * 输入转义
+		 */
 		inTransferred: function(text) {
 			return text.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 		},
-		tryInvoke: function(fn) {
+		/**
+		 * 调用方法
+		 */
+		invoke: function(fn) {
 			try {
 				return fn();
 			} catch(ex) {
-				if(owner.option.debugMode) {
-					throw ex;
-				} else {
-					return ex.description || ex.message;
-				}
+				return ex.description || ex.message;
 			}
 		}
 	};
@@ -44,7 +48,6 @@ this.jtp = {};
 	 * @type {Object}
 	 */
 	owner.option = {
-		debugMode: false,
 		codeBegin: '\{\#',
 		codeEnd: '\#\}'
 	};
@@ -74,17 +77,16 @@ this.jtp = {};
 			}
 		};
 		buffer.push('return $.buffer.join("");');
-		var fnSrc = function() {};
-		utils.tryInvoke(function() {
-			fnSrc = new Function(buffer.join(''));
-		});
+		//
 		var fn = function(model) {
 				model = model || {};
-				return utils.tryInvoke(function() {
-					return fnSrc.call(model, model) || '';
+				return utils.invoke(function() {
+					return fn.src.call(model, model) || '';
 				});
 			};
-		fn.src = fnSrc;
+		utils.invoke(function() {
+			fn.src = new Function(buffer.join(''));
+		});
 		return fn;
 	};
 
@@ -103,18 +105,19 @@ this.jtp = {};
 	 * 在浏览器环境，扩展原生元素；
 	 * @return {Object} 扩展的功能实体；
 	 */
-	owner.element = (window==null ? null : function(element, option) {
+	owner.element = (window == null ? null : function(element, option) {
 		if(!element) return;
 		if(!element.jtp) {
-			element.jtp = {};
-			element.jtp.exec = owner.compile(utils.inTransferred(element.innerHTML), option);
+			element.jtp = {
+				exec: owner.compile(utils.inTransferred(element.innerHTML), option),
+				bind: function(model) {
+					element.innerHTML = element.jtp.exec(model);
+				},
+				append: function(model) {
+					element.innerHTML += element.jtp.exec(model);
+				}
+			};
 			element.innerHTML = "";
-			element.jtp.bind = function(model) {
-				element.innerHTML = element.jtp.exec(model);
-			};
-			element.jtp.append = function(model) {
-				element.innerHTML += element.jtp.exec(model);
-			};
 		}
 		return element.jtp;
 	});
