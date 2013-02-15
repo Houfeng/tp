@@ -1,18 +1,21 @@
 /**
- * jtp 1.2
+ * jtp 1.3
  * jtp 模板引擎，最简洁高效的js模板引擎
  * jtp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
  * 邮箱：admin@xhou.net
+ * 网站：http://houfeng.net , http://houfeng.net/jtp
  */
 
-var jtp = {};
+this.jtp = {};
+
 (function(owner) {
+
 	/**
 	 * 辅助对象及方法
 	 * @type {Object}
 	 */
-	owner.helper = {
+	owner.utils = {
 		outTransferred: function(text) {
 			text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 			text = text.replace(new RegExp('\r{1}', 'gim'), '');
@@ -35,6 +38,7 @@ var jtp = {};
 			}
 		}
 	};
+
 	/**
 	 * 全局选项
 	 * @type {Object}
@@ -44,6 +48,7 @@ var jtp = {};
 		codeBegin: '\{\#',
 		codeEnd: '\#\}'
 	};
+
 	/**
 	 * 编译一个模板
 	 * @param  {String} source 模板源字符串
@@ -63,25 +68,26 @@ var jtp = {};
 		var codeBlocks = source.match(codeExp);
 		var textBlocks = source.replace(codeExp, '▎').split('▎');
 		for(var i = 0; i < textBlocks.length; i++) {
-			buffer.push('jtp.out("' + owner.helper.outTransferred(textBlocks[i]) + '");');
+			buffer.push('jtp.out("' + owner.utils.outTransferred(textBlocks[i]) + '");');
 			if(codeBlocks && codeBlocks[i]) {
 				buffer.push(codeBlocks[i].replace(codeBeginExp, '').replace(codeEndExp, '') + ';');
 			}
 		};
 		buffer.push('return jtp.buffer.join("");');
 		var _fn_src = function() {};
-		owner.helper.tryInvoke(function() {
+		owner.utils.tryInvoke(function() {
 			_fn_src = new Function(buffer.join(''));
 		});
 		var _fn = function(model) {
 				model = model || {};
-				return owner.helper.tryInvoke(function() {
+				return owner.utils.tryInvoke(function() {
 					return _fn_src.call(model, model) || '';
 				});
 			};
 		_fn.src = _fn_src;
 		return _fn;
 	};
+
 	/**
 	 * 解析模板
 	 * @param  {String} source  模板源字符串
@@ -92,23 +98,25 @@ var jtp = {};
 		var fn = owner.compile(source, option);
 		return fn(model);
 	};
+
 	/**
 	 * 在浏览器环境，扩展原生元素；
 	 * @return {Object} 扩展的功能实体；
 	 */
-	owner.element = function(element, option) {
+	owner.element = (window==null ? null : function(element, option) {
 		if(!element) return;
 		if(!element.jtp) {
 			element.jtp = {};
-			element.jtp.$exec = owner.compile(owner.helper.inTransferred(element.innerHTML), option);
+			element.jtp.exec = owner.compile(owner.utils.inTransferred(element.innerHTML), option);
 			element.innerHTML = "";
 			element.jtp.bind = function(model) {
-				element.innerHTML = element.jtp.$exec(model);
+				element.innerHTML = element.jtp.exec(model);
 			};
 			element.jtp.append = function(model) {
-				element.innerHTML += element.jtp.$exec(model);
+				element.innerHTML += element.jtp.exec(model);
 			};
 		}
 		return element.jtp;
-	};
+	});
+
 })(typeof exports === 'undefined' ? jtp : exports);
