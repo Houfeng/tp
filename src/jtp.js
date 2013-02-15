@@ -15,7 +15,7 @@ this.jtp = {};
 	 * 辅助对象及方法
 	 * @type {Object}
 	 */
-	owner.utils = {
+	var utils = {
 		outTransferred: function(text) {
 			text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 			text = text.replace(new RegExp('\r{1}', 'gim'), '');
@@ -64,28 +64,28 @@ this.jtp = {};
 		var codeEndExp = new RegExp(option.codeEnd, 'gim');
 		var codeExp = new RegExp('(' + option.codeBegin + '(.|\n)*?' + option.codeEnd + ')', 'gim');
 		//
-		var buffer = ['var jtp={buffer:[],out:function(x){jtp.buffer.push(x);}};var $=jtp.out;'];
+		var buffer = ['var $=function(x){$.buffer.push(x);};$.buffer=[];'];
 		var codeBlocks = source.match(codeExp);
 		var textBlocks = source.replace(codeExp, '▎').split('▎');
 		for(var i = 0; i < textBlocks.length; i++) {
-			buffer.push('jtp.out("' + owner.utils.outTransferred(textBlocks[i]) + '");');
+			buffer.push('$("' + utils.outTransferred(textBlocks[i]) + '");');
 			if(codeBlocks && codeBlocks[i]) {
 				buffer.push(codeBlocks[i].replace(codeBeginExp, '').replace(codeEndExp, '') + ';');
 			}
 		};
-		buffer.push('return jtp.buffer.join("");');
-		var _fn_src = function() {};
-		owner.utils.tryInvoke(function() {
-			_fn_src = new Function(buffer.join(''));
+		buffer.push('return $.buffer.join("");');
+		var fnSrc = function() {};
+		utils.tryInvoke(function() {
+			fnSrc = new Function(buffer.join(''));
 		});
-		var _fn = function(model) {
+		var fn = function(model) {
 				model = model || {};
-				return owner.utils.tryInvoke(function() {
-					return _fn_src.call(model, model) || '';
+				return utils.tryInvoke(function() {
+					return fnSrc.call(model, model) || '';
 				});
 			};
-		_fn.src = _fn_src;
-		return _fn;
+		fn.src = fnSrc;
+		return fn;
 	};
 
 	/**
@@ -107,7 +107,7 @@ this.jtp = {};
 		if(!element) return;
 		if(!element.jtp) {
 			element.jtp = {};
-			element.jtp.exec = owner.compile(owner.utils.inTransferred(element.innerHTML), option);
+			element.jtp.exec = owner.compile(utils.inTransferred(element.innerHTML), option);
 			element.innerHTML = "";
 			element.jtp.bind = function(model) {
 				element.innerHTML = element.jtp.exec(model);
