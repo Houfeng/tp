@@ -10,6 +10,9 @@
 + 另外，jtp同时支持在浏览器环境使用及服务端javascript环境(Node.js)使用。
 ```
 
+### 最新版本
+>v 1.3
+
 ### 许可协议
 >[使用jtp请您遵守LGPL协议，否则您将会被起诉。（点击可查看LGPL协议）](http://www.gnu.org/licenses/lgpl.html)
 
