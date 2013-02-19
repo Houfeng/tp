@@ -1,5 +1,5 @@
 /**
- * jtp 1.3
+ * jtp 1.4
  * jtp 模板引擎，最简洁高效的js模板引擎
  * jtp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
@@ -7,9 +7,8 @@
  * 网站：http://houfeng.net , http://houfeng.net/jtp
  */
 
-this.jtp = {};
 (function(owner) {
-	
+
 	/**
 	 * 辅助对象及方法
 	 * @type {Object}
@@ -122,4 +121,15 @@ this.jtp = {};
 		return element.jtp;
 	});
 
-})(typeof exports === 'undefined' ? jtp : exports);
+})((function() {
+	var owner = (typeof exports === 'undefined') ? {} : exports;
+	if(window) {
+		window.jtp = owner;
+	}
+	if(typeof define === 'function' && define.amd && define.amd.jtp) {
+		define('jtp', [], function() {
+			return owner;
+		});
+	}
+	return owner;
+})());
