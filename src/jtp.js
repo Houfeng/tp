@@ -123,7 +123,7 @@
 
 })((function() {
 	var owner = (typeof exports === 'undefined') ? {} : exports;
-	if(window) {
+	if(typeof window !== 'undefined') {
 		window.jtp = owner;
 	}
 	if(typeof define === 'function' && define.amd && define.amd.jtp) {
