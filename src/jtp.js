@@ -126,7 +126,7 @@
 	if(typeof window !== 'undefined') {
 		window.jtp = owner;
 	}
-	if(typeof define === 'function' && define.amd && define.amd.jtp) {
+	if(typeof define === 'function' && define.amd) {
 		define('jtp', [], function() {
 			return owner;
 		});
