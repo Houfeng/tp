@@ -11,7 +11,7 @@
 ```
 
 ### 最新版本
->v 1.4
+>v 1.5
 
 ### 许可协议
 >[使用jtp请您遵守LGPL协议，否则您将会被起诉。（点击可查看LGPL协议）](http://www.gnu.org/licenses/lgpl.html)

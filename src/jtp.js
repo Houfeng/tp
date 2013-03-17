@@ -1,5 +1,5 @@
 /**
- * jtp 1.4
+ * jtp 1.5
  * jtp 模板引擎，最简洁高效的js模板引擎
  * jtp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
@@ -36,7 +36,7 @@
 		invoke: function(fn) {
 			try {
 				return fn();
-			} catch(ex) {
+			} catch (ex) {
 				return ex.description || ex.message;
 			}
 		}
@@ -69,20 +69,20 @@
 		var buffer = ['var $=function(x){$.buffer.push(x);};$.buffer=[];'];
 		var codeBlocks = source.match(codeExp);
 		var textBlocks = source.replace(codeExp, '▎').split('▎');
-		for(var i = 0; i < textBlocks.length; i++) {
+		for (var i = 0; i < textBlocks.length; i++) {
 			buffer.push('$("' + utils.outTransferred(textBlocks[i]) + '");');
-			if(codeBlocks && codeBlocks[i]) {
+			if (codeBlocks && codeBlocks[i]) {
 				buffer.push(codeBlocks[i].replace(codeBeginExp, '').replace(codeEndExp, '') + ';');
 			}
 		};
 		buffer.push('return $.buffer.join("");');
 		//
 		var fn = function(model) {
-				model = model || {};
-				return utils.invoke(function() {
-					return fn.src.call(model, model) || '';
-				});
-			};
+			model = model || {};
+			return utils.invoke(function() {
+				return fn.src.call(model, model) || '';
+			});
+		};
 		utils.invoke(function() {
 			fn.src = new Function(buffer.join(''));
 		});
@@ -101,35 +101,49 @@
 	};
 
 	/**
-	 * 在浏览器环境，扩展原生元素；
+	 * 如果在浏览器环境，添加针对DOM的扩展方法；
 	 * @return {Object} 扩展的功能实体；
 	 */
-	owner.element = (window == null ? null : function(element, option) {
-		if(!element) return;
-		if(!element.jtp) {
-			element.jtp = {
-				exec: owner.compile(utils.inTransferred(element.innerHTML), option),
-				bind: function(model) {
-					element.innerHTML = element.jtp.exec(model);
-				},
-				append: function(model) {
-					element.innerHTML += element.jtp.exec(model);
-				}
-			};
-			element.innerHTML = "";
-		}
-		return element.jtp;
-	});
+	if (typeof window !== 'undefined' && window.document) {
+		owner.queryElement = function(id) {
+			return window.document.getElementById(id);
+		};
+		owner.element = function(element, option) {
+			element = (typeof element === 'string') ? owner.queryElement(element) : element;
+			if (!element) return;
+			if (!element.jtp) {
+				var linkElement = element.getAttribute('data-link');
+				linkElement = linkElement ? owner.queryElement(linkElement) : element;
+				var elementIsScript = element.nodeName === 'SCRIPT';
+				var tplElement = elementIsScript ? element : linkElement;
+				var tagElement = elementIsScript ? linkElement : element;
+				element.jtp = {
+					exec: owner.compile(utils.inTransferred(tplElement.innerHTML), option),
+					bind: function(model) {
+						tagElement.innerHTML = element.jtp.exec(model);
+					},
+					append: function(model) {
+						tagElement.innerHTML += element.jtp.exec(model);
+					}
+				};
+				element.innerHTML = "";
+			}
+			return element.jtp;
+		};
+	}
 
 })((function() {
+	//支持CommonJS规范
 	var owner = (typeof exports === 'undefined') ? {} : exports;
-	if(typeof window !== 'undefined') {
-		window.jtp = owner;
-	}
-	if(typeof define === 'function' && define.amd) {
+	//支持AMD规范
+	if (typeof define === 'function' && define.amd) {
 		define('jtp', [], function() {
 			return owner;
 		});
+	}
+	//创建全局jtp对象
+	if (typeof window !== 'undefined') {
+		window.jtp = owner;
 	}
 	return owner;
 })());

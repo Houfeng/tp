@@ -62,8 +62,13 @@
 		<textarea id="_dst" placeholder='result ...' readonly='readonly'></textarea>
 	</div>
 		</div>
-<div class="_demo">
-	<ul id="temp">
+<script type="text/template" data-link="temp" id="tple">
+		{# for(var i in this){ #}
+		<li>{# $(this[i]) #}</li>
+		{# } #}
+</script>
+<div class="_demo" >
+	<ul id="temp" data-link1="tple">
 		{# for(var i in this){ #}
 		<li>{# $(this[i]) #}</li>
 		{# } #}
@@ -89,7 +94,7 @@
  			$get('_data').onkeyup=$excute;
  			$get('_src').onkeyup();
  			//demo 2
- 			jtp.element($get('temp')).bind(["item-1","item-2","item-3"]);
+ 			jtp.element('temp').bind(["item-1","item-2","item-3"]);
 
  		</script>
 	</body>
