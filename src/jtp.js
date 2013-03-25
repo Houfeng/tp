@@ -64,6 +64,7 @@
 		//
 		var codeBeginExp = new RegExp(option.codeBegin, 'gim');
 		var codeEndExp = new RegExp(option.codeEnd, 'gim');
+		//提出代码块（包括开始、结束标记）
 		var codeExp = new RegExp('(' + option.codeBegin + '(.|\n)*?' + option.codeEnd + ')', 'gim');
 		//
 		var buffer = ['var $=function(x){$.buffer.push(x);};$.buffer=[];'];
