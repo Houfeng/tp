@@ -113,7 +113,7 @@
 			element = (typeof element === 'string') ? owner.queryElement(element) : element;
 			if (!element) return;
 			if (!element.jtp) {
-				var linkElement = element.getAttribute('data-link');
+				var linkElement = element.getAttribute('data-jtp-link');
 				linkElement = linkElement ? owner.queryElement(linkElement) : element;
 				var elementIsScript = element.nodeName === 'SCRIPT';
 				var tplElement = elementIsScript ? element : linkElement;
