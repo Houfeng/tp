@@ -62,21 +62,19 @@
 		<textarea id="_dst" placeholder='result ...' readonly='readonly'></textarea>
 	</div>
 		</div>
-<script type="text/template" data-jtp-link="temp" id="tple">
-		{# for(var i in this){ #}
-		<li>{# $(this[i]) #}</li>
-		{# } #}
-</script>
+
 <div class="_demo" >
-	<ul id="temp" data-jtp-link1="tple">
+	<script type="text/template" id="tple">
 		{# for(var i in this){ #}
-		<li>{# $(this[i]) #}</li>
+		<tr><td>{# $(this[i])}</td></tr>
 		{# } #}
-	</ul>
+	</script>
+	<table id="temp" data-jtp-link="tple">
+	</table>
 </div>
 		<script type="text/javascript" src="../src/jtp.js"></script>
  		<script type="text/javascript">
- 			var $get=function (id) {
+ 			/*var $get=function (id) {
  				return document.getElementById(id);
  			};
  			//demo 1
@@ -92,9 +90,9 @@
  			}
  			$get('_src').onkeyup=$excute;
  			$get('_data').onkeyup=$excute;
- 			$get('_src').onkeyup();
+ 			$get('_src').onkeyup();*/
  			//demo 2
- 			jtp.element('temp').bind(["item-1","item-2","item-3"]);
+ 			//jtp.element('temp').bind(["item-1","item-2","item-3"]);
 
  		</script>
 	</body>
