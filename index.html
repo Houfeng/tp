@@ -4,7 +4,7 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="tp : 如同“tp”的名字，“轻量、简洁、高效”是jtp的哲学！" />
+    <meta name="description" content="tp : 如同“tp”的名字，“轻量、简洁、高效”是tp的哲学！" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -19,7 +19,7 @@
           <a id="forkme_banner" href="https://github.com/Houfeng/tp">View on GitHub</a>
 
           <h1 id="project_title">tp</h1>
-          <h2 id="project_tagline">如同“tp”的名字，“轻量、简洁、高效”是jtp的哲学！</h2>
+          <h2 id="project_tagline">如同“tp”的名字，“轻量、简洁、高效”是tp的哲学！</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/Houfeng/tp/zipball/master">Download this project as a .zip file</a>
@@ -52,7 +52,7 @@
 <a name="-1" class="anchor" href="#-1"><span class="octicon octicon-link"></span></a>最新版本</h3>
 
 <blockquote>
-<p>v 1.6</p>
+<p>v 2.0</p>
 </blockquote>
 
 <h3>
@@ -116,25 +116,31 @@ rs: “&lt;div&gt;My name is tp&lt;/div&gt;”
 
 <p>HTML:</p>
 
-<div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"list"</span><span class="nt">&gt;</span>
-{# for(var i in this #}
-<span class="nt">&lt;li&gt;</span>{# $(this[i]) #}<span class="nt">&lt;/li&gt;</span>
-{# } #}
+<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">"list-template"</span> <span class="na">type=</span><span class="s">'text/template'</span><span class="nt">&gt;</span>
+<span class="p">{</span><span class="err">#</span> <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="k">this</span> <span class="err">#</span><span class="p">}</span>
+<span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;</span><span class="p">{</span><span class="err">#</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="err">#</span><span class="p">}</span><span class="o">&lt;</span><span class="err">/li&gt;</span>
+<span class="p">{</span><span class="err">#</span> <span class="p">}</span> <span class="err">#</span><span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"list"</span><span class="nt">&gt;</span>
 <span class="nt">&lt;/ul&gt;</span>
 </pre></div>
 
 <p>代码:</p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">list</span><span class="o">=</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">'list'</span><span class="p">);</span>
-
-<span class="c1">//方式1,直接使用:</span>
-<span class="nx">tp</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="nx">list</span><span class="p">).</span><span class="nx">bind</span><span class="p">([</span><span class="s2">"item-1"</span><span class="p">,</span><span class="s2">"item-2"</span><span class="p">]);</span> <span class="c1">//绑定数据</span>
-<span class="nx">tp</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="nx">list</span><span class="p">).</span><span class="nx">append</span><span class="p">([</span><span class="s2">"item-1"</span><span class="p">,</span><span class="s2">"item-2"</span><span class="p">]);</span> <span class="c1">//追加绑定数据</span>
-
-<span class="c1">//方式2,先初始化后使用:</span>
-<span class="nx">tp</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="nx">list</span><span class="p">);</span><span class="c1">//初始化元素</span>
-<span class="nx">list</span><span class="p">.</span><span class="nx">tp</span><span class="p">.</span><span class="nx">bind</span><span class="p">([</span><span class="s2">"item-1"</span><span class="p">,</span><span class="s2">"item-2"</span><span class="p">]);</span> <span class="c1">//绑定数据</span>
-<span class="nx">list</span><span class="p">.</span><span class="nx">tp</span><span class="p">.</span><span class="nx">append</span><span class="p">([</span><span class="s2">"item-1"</span><span class="p">,</span><span class="s2">"item-2"</span><span class="p">]);</span> <span class="c1">//追加绑定数据</span>
+<div class="highlight"><pre><span class="c1">//绑定数据:</span>
+<span class="nx">tp</span><span class="p">.</span><span class="nx">bind</span><span class="p">({</span>
+    <span class="nx">template</span><span class="o">:</span><span class="s1">'list-template'</span><span class="p">,</span>
+    <span class="nx">element</span><span class="o">:</span><span class="s1">'list'</span><span class="p">,</span>
+    <span class="nx">model</span><span class="o">:</span><span class="p">[</span><span class="s2">"item-1"</span><span class="p">,</span><span class="s2">"item-2"</span><span class="p">]</span>
+<span class="p">});</span> 
+<span class="c1">//追加绑定数据:</span>
+<span class="nx">tp</span><span class="p">.</span><span class="nx">bind</span><span class="p">({</span>
+    <span class="nx">template</span><span class="o">:</span><span class="s1">'list-template'</span><span class="p">,</span>
+    <span class="nx">element</span><span class="o">:</span><span class="s1">'list'</span><span class="p">,</span>
+    <span class="nx">model</span><span class="o">:</span><span class="p">[</span><span class="s2">"item-1"</span><span class="p">,</span><span class="s2">"item-2"</span><span class="p">],</span>
+    <span class="nx">append</span><span class="o">:</span><span class="kc">true</span>
+<span class="p">});</span> 
 </pre></div>
 
 <p>结果:</p>
