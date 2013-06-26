@@ -11,7 +11,7 @@
 ```
 
 ### 最新版本
->v 1.6
+>v 2.0
 
 ### 许可协议
 >[使用tp请您遵守LGPL协议，否则您将会被起诉。（点击可查看LGPL协议）](http://www.gnu.org/licenses/lgpl.html)
@@ -60,24 +60,30 @@ rs: “<div>My name is tp</div>”
 #### HTML元素
 HTML:
 ```html
-<ul id="list">
+<script id="list-template" type='text/template'>
 {# for(var i in this #}
 <li>{# $(this[i]) #}</li>
 {# } #}
+</script>
+
+<ul id="list">
 </ul>
 ```
 代码:
 ```javascript
-var list=document.getElementById('list');
-
-//方式1,直接使用:
-tp.element(list).bind(["item-1","item-2"]); //绑定数据
-tp.element(list).append(["item-1","item-2"]); //追加绑定数据
-
-//方式2,先初始化后使用:
-tp.element(list);//初始化元素
-list.tp.bind(["item-1","item-2"]); //绑定数据
-list.tp.append(["item-1","item-2"]); //追加绑定数据
+//绑定数据:
+tp.bind({
+	template:'list-template',
+	element:'list',
+	model:["item-1","item-2"]
+}); 
+//追加绑定数据:
+tp.bind({
+	template:'list-template',
+	element:'list',
+	model:["item-1","item-2"],
+	append:true
+}); 
 ```
 
 结果:
