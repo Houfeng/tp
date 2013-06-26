@@ -1,102 +1,30 @@
 <html>
 	<head>
- 		<title>jtp demo</title>
- 		<style type="text/css">
- 			body{ background-color: #e3e3e5;}
- 			h1{ text-align: center; font-weight: bold; font-style: italic;}
- 			textarea{
- 				outline: none;
- 				padding: 5px; 
-			    font-size: 14px;
-			    border: 1px solid #ccc;
-			    resize: none;
-			    border-radius: 0.1em;
-			    box-shadow: inset 1px 1px 2px rgba(10,10,10,.1);
- 			}
- 			._demo{
- 				width: 815px;
- 				clear: both;
- 				margin: auto auto;
- 			}
-        	#_dst, #_src{
-        		width: 400px;
-        		height: 350px;
-        		resize:none;
-        	}
-        	#_data{
-        		width:806px;
-        		height:30px;
-        		resize: none;
-        	}
-        	.box{
-        		float: left;
-        		margin: 3px;
-        	}
- 		</style>
+	 	<title>tp demo</title>
 	</head>
 	<body>
-		<h1>jtp demo</h1>
-		<div class='_demo'>
-				<div class="box">data:<br/>
-				<textarea id="_data" placeholder='data ...'>
-{name:'jtp dome',cityList:['beijing','shanghai']}
-				</textarea></div>
-		<div class="box">template:<br/>
-		<textarea id="_src" placeholder='template source ...'>
-<html>
-	<head>
-		<title>{# $(this.name) #}</title>
-	</head>
-	<body>
-		<h3>city list</h3>
-		<ul>
-			{# for(var i in this.cityList){ #}
-				<li>{# $(this.cityList[i]) #}<li>
-			{# } #}
+		<script type="text/template" id="tple">
+			{# for(var i in this){ #}
+			<li>
+	            <a href='{# $(this[i].ApproveUrl); #}' target="_blank">{# $(this[i]); #}</a>
+	            <span class="ui-info-time">{# $(this[i]); #}</span>
+	        </li>
+	        {# } #}
+		</script>
+		<ul id="temp" >
+			{# for(var i in this){ #}
+			<li>
+	            <span class="ui-info-time">{# $(this[i]); #}</span>
+	        </li>
+	        {# } #}
 		</ul>
-	</body>
-</html>
-		</textarea>	
-	</div>
-	<div class="box">resoult:<br/>
-		<textarea id="_dst" placeholder='result ...' readonly='readonly'></textarea>
-	</div>
-		</div>
-
-<div class="_demo" >
-	<script type="text/template" id="tple">
-		{# for(var i in this){ #}
-		<li>
-            <a href='{# $(this[i].ApproveUrl); #}' target="_blank">{# $(this[i]); #}</a>
-            <span class="ui-info-time">{# $(this[i]); #}</span>
-        </li>
-        {# } #}
-	</script>
-	<ul id="temp" data-jtp-link="tple">
-	</ul>
-</div>
-		<script type="text/javascript" src="../src/jtp.js"></script>
- 		<script type="text/javascript">
- 			/*var $get=function (id) {
- 				return document.getElementById(id);
- 			};
- 			//demo 1
- 			var $excute=function () {
- 				try{
-	 				var data=null;
-	 				try{
-	 					data=eval('('+$get('_data').value+')');
-	 				}catch(ex){}
-	 				var fn=jtp.compile($get('_src').value);
-	 				$get('_dst').value=fn(data);
- 				}catch(ex){}
- 			}
- 			$get('_src').onkeyup=$excute;
- 			$get('_data').onkeyup=$excute;
- 			$get('_src').onkeyup();*/
- 			//demo 2
- 			jtp.element('temp').bind(["item-1","item-2","item-3"]);
-
- 		</script>
+		<script type="text/javascript" src="../src/tp.js"></script>
+	 	<script type="text/javascript">
+	 			tp.bind({
+	 				template:'tple',
+	 				el:'temp',
+	 				model:['item-1','item-1','item-1']
+	 			});
+	 	</script>
 	</body>
 </html>

@@ -1,10 +1,10 @@
 /**
- * jtp 1.6
- * jtp 模板引擎，最简洁高效的js模板引擎
- * jtp 可应用于Node.js，也可以在浏览器环境下使用。
+ * tp 2.0
+ * tp 模板引擎，最简洁高效的js模板引擎
+ * tp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
  * 邮箱：admin@xhou.net
- * 网站：http://houfeng.net , http://houfeng.net/jtp
+ * 网站：http://houfeng.net , http://houfeng.net/tp
  */
 
 (function(owner) {
@@ -110,27 +110,19 @@
 		owner.queryElement = function(id) {
 			return window.document.getElementById(id);
 		};
-		owner.element = function(element, option) {
-			element = (typeof element === 'string') ? owner.queryElement(element) : element;
-			if (!element) return;
-			if (!element.jtp) {
-				var linkElement = element.getAttribute('data-jtp-link');
-				linkElement = linkElement ? owner.queryElement(linkElement) : element;
-				var elementIsScript = element.nodeName === 'SCRIPT';
-				var tplElement = elementIsScript ? element : linkElement;
-				var tagElement = elementIsScript ? linkElement : element;
-				element.jtp = {
-					exec: owner.compile(utils.inTransferred(tplElement.innerHTML), option),
-					bind: function(model) {
-						tagElement.innerHTML = element.jtp.exec(model);
-					},
-					append: function(model) {
-						tagElement.innerHTML += element.jtp.exec(model);
-					}
-				};
-				tagElement.innerHTML = "";
+		owner.bind = function(option) {
+			option = option || {};
+			option.el = option.el || option.element;
+			option.el = (typeof option.el === 'string') ? owner.queryElement(option.el) : option.el;
+			option.tp = option.tp || option.template || option.el;
+			option.tp = (typeof option.tp === 'string') ? owner.queryElement(option.tp) : option.tp;
+			if (!option.tp || !option.el) return;
+			option.tp.exec = option.tp.exec || owner.compile(utils.inTransferred(option.tp.innerHTML), option);
+			if (option.append) {
+				option.el.innerHTML += option.tp.exec(option.model);
+			} else {
+				option.el.innerHTML = option.tp.exec(option.model);
 			}
-			return element.jtp;
 		};
 	}
 
@@ -139,13 +131,13 @@
 	var owner = (typeof exports === 'undefined') ? {} : exports;
 	//支持AMD规范
 	if (typeof define === 'function' && define.amd) {
-		define('jtp', [], function() {
+		define('tp', [], function() {
 			return owner;
 		});
 	}
 	//创建全局jtp对象
 	if (typeof window !== 'undefined') {
-		window.jtp = owner;
+		window.jtp = window.tp = owner;
 	}
 	return owner;
 })());
