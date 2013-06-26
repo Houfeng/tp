@@ -1,5 +1,5 @@
 /**
- * jtp 1.5
+ * jtp 1.6
  * jtp 模板引擎，最简洁高效的js模板引擎
  * jtp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
@@ -21,6 +21,7 @@
 			text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 			text = text.replace(new RegExp('\r{1}', 'gim'), '');
 			text = text.replace(new RegExp('\n{1}', 'gim'), '\\n');
+			text = text.replace(new RegExp('\r{1}', 'gim'), '\\r');
 			text = text.replace(new RegExp('\"{1}', 'gim'), '\\"');
 			return text;
 		},
@@ -127,7 +128,7 @@
 						tagElement.innerHTML += element.jtp.exec(model);
 					}
 				};
-				element.innerHTML = "";
+				tagElement.innerHTML = "";
 			}
 			return element.jtp;
 		};

@@ -66,11 +66,14 @@
 <div class="_demo" >
 	<script type="text/template" id="tple">
 		{# for(var i in this){ #}
-		<tr><td>{# $(this[i])}</td></tr>
-		{# } #}
+		<li>
+            <a href='{# $(this[i].ApproveUrl); #}' target="_blank">{# $(this[i]); #}</a>
+            <span class="ui-info-time">{# $(this[i]); #}</span>
+        </li>
+        {# } #}
 	</script>
-	<table id="temp" data-jtp-link="tple">
-	</table>
+	<ul id="temp" data-jtp-link="tple">
+	</ul>
 </div>
 		<script type="text/javascript" src="../src/jtp.js"></script>
  		<script type="text/javascript">
@@ -92,7 +95,7 @@
  			$get('_data').onkeyup=$excute;
  			$get('_src').onkeyup();*/
  			//demo 2
- 			//jtp.element('temp').bind(["item-1","item-2","item-3"]);
+ 			jtp.element('temp').bind(["item-1","item-2","item-3"]);
 
  		</script>
 	</body>
