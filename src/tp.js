@@ -110,18 +110,19 @@
 		owner.queryElement = function(id) {
 			return window.document.getElementById(id);
 		};
+		var templates = {};
 		owner.bind = function(option) {
 			option = option || {};
 			option.el = option.el || option.element;
 			option.el = (typeof option.el === 'string') ? owner.queryElement(option.el) : option.el;
 			option.tp = option.tp || option.template || option.el;
-			option.tp = (typeof option.tp === 'string') ? owner.queryElement(option.tp) : option.tp;
+			option.tp = (typeof option.tp === 'string') ? (owner.queryElement(option.tp) || option.tp) : option.tp;
 			if (!option.tp || !option.el) return;
-			option.tp.exec = option.tp.exec || owner.compile(utils.inTransferred(option.tp.innerHTML), option);
+			templates[option.tp] = templates[option.tp] || owner.compile(utils.inTransferred(option.tp.innerHTML || option.tp), option);
 			if (option.append) {
-				option.el.innerHTML += option.tp.exec(option.model);
+				option.el.innerHTML += templates[option.tp](option.model);
 			} else {
-				option.el.innerHTML = option.tp.exec(option.model);
+				option.el.innerHTML = templates[option.tp](option.model);
 			}
 		};
 	}
