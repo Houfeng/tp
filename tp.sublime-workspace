@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"tp",
+				"tple"
+			],
+			[
 				"list",
 				"list-template"
 			],
@@ -18,10 +22,6 @@
 			[
 				"ex",
 				"exec"
-			],
-			[
-				"tp",
-				"tp"
 			],
 			[
 				"temp",
@@ -275,14 +275,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "src/tp.js",
-			"settings":
-			{
-				"buffer_size": 3683,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -364,6 +356,9 @@
 	},
 	"file_history":
 	[
+		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src/tp.min.js",
+		"/Users/houfeng/Desktop/Dev/MyProjects/tp/test/demo.html",
+		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src/tp.js",
 		"/Users/houfeng/Desktop/Dev/MyProjects/jtp/README.md",
 		"/Users/houfeng/Desktop/Dev/MyProjects/jtp/src/tp.js",
 		"/Users/houfeng/Desktop/Dev/MyProjects/jtp/test/demo.html",
@@ -477,36 +472,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "src/tp.js",
-					"settings":
-					{
-						"buffer_size": 3683,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

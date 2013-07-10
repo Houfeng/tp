@@ -1,20 +1,28 @@
 <html>
 	<head>
 	 	<title>tp demo</title>
+	 	<meta charset=utf-8>
+	 	<meta name=description content="">
+	 	<meta name=viewport content="width=device-width, initial-scale=1">
 	</head>
 	<body>
 		<script type="text/template" id="tple">
-			{# for(var i in this){ #}
+			{# for(var i in this){ 
+			  var item=this[i];
+			  var t="你好";
+			#}
 			<li>
-	            <a href='{# $(this[i].ApproveUrl); #}' target="_blank">{# $(this[i]); #}</a>
-	            <span class="ui-info-time">{# $(this[i]); #}</span>
+	            <a href='{# $(this[i].ApproveUrl); #}' target="_blank">{# $(item); #}</a>
+	            <span class="ui-info-time">{# $(item); #}</span>
 	        </li>
 	        {# } #}
 		</script>
 		<ul id="temp" >
-			{# for(var i in this){ #}
+			{# for(var i in this){ 
+			   var item=this[i]; 
+			#}
 			<li>
-	            <span class="ui-info-time">{# $(this[i]); #}</span>
+	            <span class="ui-info-time">{# $(item); #}</span>
 	        </li>
 	        {# } #}
 		</ul>
