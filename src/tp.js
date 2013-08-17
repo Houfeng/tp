@@ -1,5 +1,5 @@
 /**
- * tp 2.1
+ * tp 2.2
  * tp 模板引擎，最简洁高效的js模板引擎
  * tp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
@@ -31,21 +31,20 @@
 		inTransferred: function(text) {
 			return text.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 		},
-		/**
-		 * 调用方法
-		 */
-		invoke: function(fn) {
+		invoke: function(fn, message) {
 			try {
 				return fn();
 			} catch (ex) {
-				return ex.description || ex.message;
+				ex.message = ex.message || "";
+				ex.stack = ex.stack || "";
+				ex.message = message + " : " + ex.message + "\r\n    " + ex.stack;
+				throw ex;
 			}
 		}
 	};
 
 	/**
 	 * 全局选项
-	 * @type {Object}
 	 */
 	owner.option = {
 		codeBegin: '\{\#',
@@ -83,11 +82,11 @@
 			model = model || {};
 			return utils.invoke(function() {
 				return fn.src.call(model, model) || '';
-			});
+			}, "Template execute error");
 		};
 		utils.invoke(function() {
 			fn.src = new Function(buffer.join(''));
-		});
+		}, "Template compile error");
 		return fn;
 	};
 
