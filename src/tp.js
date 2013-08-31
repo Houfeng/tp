@@ -63,7 +63,7 @@
 		var codeBeginExp = new RegExp(codeBegin, 'gim');
 		var codeEndExp = new RegExp(codeEnd, 'gim');
 		//提出代码块（包括开始、结束标记）
-		var codeExp = n`ew RegExp('(' + codeBegin + '(.|\\\n|\\\r)*?' + codeEnd + ')', 'gim');
+		var codeExp = new RegExp('(' + codeBegin + '(.|\\\n|\\\r)*?' + codeEnd + ')', 'gim');
 		var outCodeExp = new RegExp(codeBegin + '\\\s*=', 'gim');
 		//--
 		var buffer = ['with($.model){'];
