@@ -55,7 +55,6 @@
 			handler.buffer.push(text);
 		};
 		extend(extendTable, handler);
-		handler.buffer = [];
 		return handler;
 	};
 
@@ -77,7 +76,7 @@
 		//提出代码块（包括开始、结束标记）
 		var codeExp = new RegExp('(' + option.codeBegin + '(.|\n|\r)*?' + option.codeEnd + ')', 'gim');
 		//
-		var buffer = ['$.model=this;with($.model){'];
+		var buffer = ['with($.model){'];
 		var codeBlocks = source.match(codeExp);
 		var textBlocks = source.replace(codeExp, '▎').split('▎');
 		for (var i = 0; i < textBlocks.length; i++) {
@@ -88,16 +87,19 @@
 		};
 		buffer.push('};return $.buffer.join("");');
 		//
-		var fn = function(model) {
+		var func = function(model) {
+			var handler = createHandler();
+			handler.func = func;
+			handler.buffer = [];
+			handler.model = model || {};
 			return tryInvoke(function() {
-				return fn.src.call((model || {}), fn.handler) || '';
+				return (handler.func.src.call(handler.model, handler) || '');
 			}, "Template execute error");
 		};
 		tryInvoke(function() {
-			fn.handler = createHandler();
-			fn.src = new Function("$", buffer.join(''));
+			func.src = new Function("$", buffer.join(''));
 		}, "Template compile error");
-		return fn;
+		return func;
 	};
 
 	/**
