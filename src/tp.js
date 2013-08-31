@@ -9,14 +9,6 @@
 
 (function(owner) {
 
-	/**
-	 * 全局选项
-	 */
-	owner.option = {
-		codeBegin: '\<\%',
-		codeEnd: '\%\>'
-	};
-
 	function outTransferred(text) {
 		text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 		text = text.replace(new RegExp('\r{1}', 'gim'), '');
@@ -58,24 +50,16 @@
 		return handler;
 	};
 
-	owner.extend = extend;
-
-	/**
-	 * 编译一个模板
-	 * @param  {String} source 模板源字符串
-	 * @return {Function}      编译后的模板函数
-	 */
-	owner.compile = function(source, option) {
+	function compile(source, option) {
 		source = source || '';
 		option = option || {};
-		option.codeBegin = option.codeBegin || owner.option.codeBegin;
-		option.codeEnd = option.codeEnd || owner.option.codeEnd;
-		//
-		var codeBeginExp = new RegExp(option.codeBegin, 'gim');
-		var codeEndExp = new RegExp(option.codeEnd, 'gim');
+		var codeBegin = option.codeBegin || owner.codeBegin;
+		var codeEnd = option.codeEnd || owner.codeEnd;
+		var codeBeginExp = new RegExp(codeBegin, 'gim');
+		var codeEndExp = new RegExp(codeEnd, 'gim');
 		//提出代码块（包括开始、结束标记）
-		var codeExp = new RegExp('(' + option.codeBegin + '(.|\n|\r)*?' + option.codeEnd + ')', 'gim');
-		//
+		var codeExp = new RegExp('(' + codeBegin + '(.|\n|\r)*?' + codeEnd + ')', 'gim');
+		//--
 		var buffer = ['with($.model){'];
 		var codeBlocks = source.match(codeExp);
 		var textBlocks = source.replace(codeExp, '▎').split('▎');
@@ -86,7 +70,7 @@
 			}
 		};
 		buffer.push('};return $.buffer.join("");');
-		//
+		//--
 		var func = function(model) {
 			var handler = createHandler();
 			handler.func = func;
@@ -102,14 +86,26 @@
 		return func;
 	};
 
+	owner.codeBegin = '\<\%';
+	owner.codeEnd = '\%\>';
+
 	/**
-	 * 解析模板
-	 * @param  {String} source  模板源字符串
-	 * @param  {Objtect} model  数据模型
-	 * @return {String}         解析结果
+	 * 扩展引擎功能
+	 */
+	owner.extend = extend;
+
+	/**
+	 * 编译一个模板,source:模板源字符串
+	 */
+	owner.compile = function(source, option) {
+		return compile(source, option);
+	};
+
+	/**
+	 * 解析模板,source:模板源字符串,model:数据模型
 	 */
 	owner.parse = function(source, model, option) {
-		var fn = owner.compile(source, option);
+		var fn = compile(source, option);
 		return fn(model);
 	};
 
@@ -117,18 +113,19 @@
 	 * 如果在浏览器环境，添加针对DOM的扩展方法；
 	 */
 	if (typeof window !== 'undefined' && window.document) {
-		owner.query = (owner.option.query || function(id) {
+		owner.query = function(id) {
 			return window.document.getElementById(id);
-		});
+		};
 		var templates = {};
 		owner.bind = function(option) {
 			option = option || {};
+			var query = option.query || owner.query;
 			option.el = option.el || option.element;
-			option.el = (typeof option.el === 'string') ? owner.query(option.el) : option.el;
+			option.el = (typeof option.el === 'string') ? query(option.el) : option.el;
 			option.tp = option.tp || option.template || option.el;
-			option.tp = (typeof option.tp === 'string') ? (owner.query(option.tp) || option.tp) : option.tp;
+			option.tp = (typeof option.tp === 'string') ? (query(option.tp) || option.tp) : option.tp;
 			if (!option.tp || !option.el) return;
-			templates[option.tp] = templates[option.tp] || owner.compile(inTransferred(option.tp.innerHTML || option.tp), option);
+			templates[option.tp] = templates[option.tp] || compile(inTransferred(option.tp.innerHTML || option.tp), option);
 			if (option.append) {
 				option.el.innerHTML += templates[option.tp](option.model);
 			} else {
