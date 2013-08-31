@@ -36,7 +36,7 @@
 #### 解析(tp.parse)
 代码:
 ```javascript
-var html='<div>My name is {# $(this.name) #}</div>';
+var html='<div>My name is <% $(name) %></div>';
 var rs=tp.parse(html,{name:'tp'});
 ```
 结果:
@@ -47,7 +47,7 @@ rs: “<div>My name is tp</div>”
 #### 编译(tp.complite)
 代码:
 ```javascript
-var html='<div>My name is {# $(this.name) #}</div>';
+var html='<div>My name is <% $(name) %></div>';
 var fn=tp.complite(html);
 var rs=fn({name:'tp'});
 ```
@@ -61,9 +61,9 @@ rs: “<div>My name is tp</div>”
 HTML:
 ```html
 <script id="list-template" type='text/template'>
-{# for(var i in this #}
-<li>{# $(this[i]) #}</li>
-{# } #}
+<% for(var i in this %>
+<li><% $(this[i]) %></li>
+<% } %>
 </script>
 
 <ul id="list">
