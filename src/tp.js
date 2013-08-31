@@ -36,17 +36,20 @@
 	var extendTable = {};
 
 	function extend(src, dst) {
+		if (!src) return;
 		dst = dst || extendTable;
 		for (var name in src) {
 			dst[name] = src[name];
 		};
 	};
 
-	function createHandler() {
+	function createHandler(_extends) {
 		var handler = function(text) {
 			handler.buffer.push(text);
 		};
-		extend(extendTable, handler);
+		for (var i in _extends) {
+			if (_extends[i]) extend(_extends[i], handler);
+		};
 		return handler;
 	};
 
@@ -71,8 +74,8 @@
 		};
 		buffer.push('};return $.buffer.join("");');
 		//--
-		var func = function(model) {
-			var handler = createHandler();
+		var func = function(model, _extend) {
+			var handler = createHandler([extendTable, option.extend, _extend]);
 			handler.func = func;
 			handler.buffer = [];
 			handler.model = model || {};
@@ -104,9 +107,9 @@
 	/**
 	 * 解析模板,source:模板源字符串,model:数据模型
 	 */
-	owner.parse = function(source, model, option) {
+	owner.parse = function(source, model, option, _extend) {
 		var fn = compile(source, option);
-		return fn(model);
+		return fn(model, _extend);
 	};
 
 	/**

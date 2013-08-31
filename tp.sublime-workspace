@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"code",
+				"codeEnd"
+			],
+			[
+				"C",
+				"CODE_END"
+			],
+			[
+				"con",
+				"codeBegin"
+			],
+			[
 				"d",
 				"dst"
 			],
@@ -150,10 +162,6 @@
 			[
 				"wi",
 				"window"
-			],
-			[
-				"con",
-				"config"
 			],
 			[
 				"ro",
@@ -480,6 +488,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"#}",
+			"{#",
 			"invoke",
 			"queryElement",
 			"utils.",
@@ -498,6 +508,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"%>",
+			"<%",
 			"tryInvoke",
 			"query",
 			" ",
