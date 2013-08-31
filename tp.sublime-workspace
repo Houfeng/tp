@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"d",
+				"dst"
+			],
+			[
+				"ex",
+				"extend"
+			],
+			[
+				"n",
+				"name"
+			],
+			[
+				"ext",
+				"extendTable"
+			],
+			[
+				"o",
+				"owner"
+			],
+			[
 				"in",
 				"invoke"
 			],
@@ -32,10 +52,6 @@
 				"el"
 			],
 			[
-				"ex",
-				"exec"
-			],
-			[
 				"temp",
 				"template"
 			],
@@ -46,10 +62,6 @@
 			[
 				"l",
 				"linkElement"
-			],
-			[
-				"d",
-				"document"
 			],
 			[
 				"de",
@@ -248,10 +260,6 @@
 				"border"
 			],
 			[
-				"n",
-				"namespace"
-			],
-			[
 				"mo",
 				"mokit"
 			],
@@ -280,12 +288,24 @@
 	"buffers":
 	[
 	],
-	"build_system": "",
+	"build_system": "Packages/WebBuilder ST/WebBuilder.sublime-build",
 	"command_palette":
 	{
-		"height": 375.0,
+		"height": 207.0,
 		"selected_items":
 		[
+			[
+				"js",
+				"Format: Javascript"
+			],
+			[
+				"pr",
+				"Package Control: Remove Package"
+			],
+			[
+				"pi",
+				"Package Control: Install Package"
+			],
 			[
 				"pci",
 				"Package Control: Install Package"
@@ -343,7 +363,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 588.0
+		"width": 476.0
 	},
 	"console":
 	{
@@ -361,9 +381,22 @@
 	"file_history":
 	[
 		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src/tp.js",
-		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src/tp.min.js",
-		"/Users/houfeng/Desktop/Dev/MyProjects/tp/test/demo.html",
 		"/Users/houfeng/Desktop/Dev/MyProjects/tp/README.md",
+		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src_build/tp.js",
+		"/Users/houfeng/Desktop/Dev/MyProjects/tp/test/demo.html",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/SideBarEnhancements/Default (OSX).sublime-keymap",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/JsFormat/Default (OSX).sublime-keymap",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/JsFormat/JsFormat.sublime-settings",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/SideBarEnhancements/messages/11.13.2012.1305.0.txt",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/Distraction Free.sublime-settings",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/JavaScript.sublime-settings",
+		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/houfeng/Desktop/CleanApp-crack/使用说明.txt.dump",
+		"/Users/houfeng/Desktop/CleanApp-crack/使用说明.txt",
+		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src/tp.min.js",
 		"/Users/houfeng/Desktop/Dev/MyProjects/jtp/README.md",
 		"/Users/houfeng/Desktop/Dev/MyProjects/jtp/src/tp.js",
 		"/Users/houfeng/Desktop/Dev/MyProjects/jtp/test/demo.html",
@@ -411,7 +444,6 @@
 		"/Users/houfeng/Desktop/Dev/项目/joop/src/joop.js",
 		"/Users/houfeng/Desktop/Dev/项目/joop/test/joopTest.js",
 		"/Users/houfeng/Desktop/Dev/项目/joop/joop.sublime-project",
-		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/Users/houfeng/Desktop/Dev/项目/joop/test/qunit/helper.js",
 		"/Users/houfeng/Desktop/Dev/项目/joop/test/index.html",
 		"/Users/houfeng/Desktop/快译助手/popup.html",
@@ -427,7 +459,6 @@
 		"/Users/houfeng/Desktop/joop.js",
 		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/SublimeCodeIntel/Default (OSX).sublime-mousemap",
 		"/Users/houfeng/Desktop/a.txt",
-		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/JavaScript.sublime-settings",
 		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/BracketHighlighter.sublime-settings",
 		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/sublime_tfs.sublime-settings",
 		"/Users/houfeng/Desktop/desktop.ini",
@@ -449,6 +480,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"invoke",
+			"queryElement",
+			"utils.",
+			"utils",
 			"jtp",
 			"tple",
 			"tryInvoke",
@@ -463,6 +498,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"tryInvoke",
+			"query",
+			" ",
 			"tp",
 			"invoke",
 			"utils",
@@ -515,7 +553,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 113.0
+		"height": 270.0
 	},
 	"output.jsconsole_view":
 	{

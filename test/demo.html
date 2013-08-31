@@ -7,23 +7,15 @@
 	</head>
 	<body>
 		<script type="text/template" id="tple">
-			{# for(var i in this){ 
-			  var item=this[i];
-			  var t="你好";
-			#}
-			<li>
-	            <a href='{# $(this[i].ApproveUrl); #}' target="_blank">{# $(item); #}</a>
-	            <span class="ui-info-time">{# $(item); #}</span>
-	        </li>
+			<li>{# $(list[0]); #}</li>
+			{# for(var i in list){ var item=list[i]; #}
+			<li>{# $(item); #}</li>
 	        {# } #}
 		</script>
 		<ul id="temp" >
-			{# for(var i in this){ 
-			   var item=this[i]; 
-			#}
-			<li>
-	            <span class="ui-info-time">{# $(item); #}</span>
-	        </li>
+			<li>{# $(list[0]); #}</li>
+			{# $.each(list,function(i,item){ #}
+			<li>{# $(item); #}</li>
 	        {# } #}
 		</ul>
 		<script type="text/javascript" src="../src/tp.js"></script>
@@ -31,7 +23,7 @@
 	 			tp.bind({
 	 				template:'tple',
 	 				element:'temp',
-	 				model:['item-1','item-1','item-1']
+	 				model:{list:['item-1','item-1','item-1']}
 	 			});
 	 	</script>
 	</body>
