@@ -10,6 +10,7 @@
 (function(owner) {
 
 	function outTransferred(text) {
+		if (!text) return '';
 		text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
 		text = text.replace(new RegExp('\r{1}', 'gim'), '');
 		text = text.replace(new RegExp('\n{1}', 'gim'), '\\n');
@@ -19,6 +20,7 @@
 	};
 
 	function inTransferred(text) {
+		if (!text) return '';
 		return text.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
 	};
 
@@ -61,15 +63,23 @@
 		var codeBeginExp = new RegExp(codeBegin, 'gim');
 		var codeEndExp = new RegExp(codeEnd, 'gim');
 		//提出代码块（包括开始、结束标记）
-		var codeExp = new RegExp('(' + codeBegin + '(.|\n|\r)*?' + codeEnd + ')', 'gim');
+		var codeExp = n`ew RegExp('(' + codeBegin + '(.|\\\n|\\\r)*?' + codeEnd + ')', 'gim');
+		var outCodeExp = new RegExp(codeBegin + '\\\s*=', 'gim');
 		//--
 		var buffer = ['with($.model){'];
-		var codeBlocks = source.match(codeExp);
-		var textBlocks = source.replace(codeExp, '▎').split('▎');
+		var codeBlocks = source.match(codeExp) || [];
+		var textBlocks = source.replace(codeExp, '▎').split('▎') || [];
 		for (var i = 0; i < textBlocks.length; i++) {
-			buffer.push('$("' + outTransferred(textBlocks[i]) + '");');
-			if (codeBlocks && codeBlocks[i]) {
-				buffer.push(codeBlocks[i].replace(codeBeginExp, '').replace(codeEndExp, '') + ';');
+			var text = outTransferred(textBlocks[i]);
+			var code = codeBlocks[i];
+			buffer.push('$("' + text + '");');
+			if (code != null) {
+				if (outCodeExp.test(code)) {
+					code = '$(' + code.replace(outCodeExp, '').replace(codeEndExp, '') + ');';
+				} else {
+					code = code.replace(codeBeginExp, '').replace(codeEndExp, '') + ';';
+				}
+				buffer.push(code);
 			}
 		};
 		buffer.push('};return $.buffer.join("");');

@@ -1,28 +1,30 @@
 <html>
-	<head>
-	 	<title>tp demo</title>
-	 	<meta charset=utf-8>
-	 	<meta name=description content="">
-	 	<meta name=viewport content="width=device-width, initial-scale=1">
-	</head>
-	<body>
-		<script type="text/template" id="tple">
-			<%for(var i in list){ var item=list[i];%>
-			<li> <%$(item);%> </li>
-	        <%}%>
-		</script>
-		<ul id="temp" >
-			<%for(var i in list){ var item=list[i];%>
-			<li> <%$(item);%> </li>
-	        <%}%>
-		</ul>
-		<script type="text/javascript" src="../src/tp.js"></script>
-	 	<script type="text/javascript">
+<head>
+	<title>tp demo</title>
+	<meta charset=utf-8>
+	<meta name=description content="">
+	<meta name=viewport content="width=device-width, initial-scale=1"></head>
+<body>
+	<script type="text/template" id="tple">
+		<%  
+		 for(var i in list){ 
+			var item=list[i]
+		%>
+		<li><%= item %></li>
+        <%}%>
+	 </script>
+	<ul id="temp" >
+		<%for(var i in list){ var item=list[i]%>
+		<li><%= item %></li>
+		<%}%>
+	</ul>
+	<script type="text/javascript" src="../src/tp.js"></script>
+	<script type="text/javascript">
 	 			tp.bind({
 	 				template:'tple',
 	 				element:'temp',
-	 				model:{list:['item-1','item-1','item-1']}
+	 				model:{list:['item-1','item-2','item-3']}
 	 			});
-	 	</script>
-	</body>
+	</script>
+</body>
 </html>
