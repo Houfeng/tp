@@ -13,8 +13,8 @@
 	 * 全局选项
 	 */
 	owner.option = {
-		codeBegin: '\{\#',
-		codeEnd: '\#\}'
+		codeBegin: '\<\%',
+		codeEnd: '\%\>'
 	};
 
 	function outTransferred(text) {

@@ -7,16 +7,14 @@
 	</head>
 	<body>
 		<script type="text/template" id="tple">
-			<li>{# $($.func); #}</li>
-			{# for(var i in list){ var item=list[i]; #}
-			<li>{# $(item); #}</li>
-	        {# } #}
+			<%for(var i in list){ var item=list[i];%>
+			<li> <%$(item);%> </li>
+	        <%}%>
 		</script>
 		<ul id="temp" >
-			<li>{# $(list[0]); #}</li>
-			{# $.each(list,function(i,item){ #}
-			<li>{# $(item); #}</li>
-	        {# } #}
+			<%for(var i in list){ var item=list[i];%>
+			<li> <%$(item);%> </li>
+	        <%}%>
 		</ul>
 		<script type="text/javascript" src="../src/tp.js"></script>
 	 	<script type="text/javascript">
