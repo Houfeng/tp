@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"wi",
+				"width"
+			],
+			[
+				"m",
+				"model"
+			],
+			[
+				"cu",
+				"current"
+			],
+			[
 				"ext",
 				"extendList"
 			],
@@ -46,10 +58,6 @@
 			[
 				"templa",
 				"template"
-			],
-			[
-				"m",
-				"message"
 			],
 			[
 				"tp",
@@ -158,10 +166,6 @@
 			[
 				"pa",
 				"parse"
-			],
-			[
-				"wi",
-				"window"
 			],
 			[
 				"ro",
@@ -389,9 +393,9 @@
 	"file_history":
 	[
 		"/Users/houfeng/Desktop/Dev/MyProjects/tp/test/demo.html",
-		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src_build/tp.js",
 		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src/tp.js",
 		"/Users/houfeng/Desktop/Dev/MyProjects/tp/README.md",
+		"/Users/houfeng/Desktop/Dev/MyProjects/tp/src_build/tp.js",
 		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
 		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/SideBarEnhancements/Default (OSX).sublime-keymap",
 		"/Users/houfeng/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
