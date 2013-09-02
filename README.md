@@ -11,7 +11,7 @@
 ```
 
 ### 最新版本
->v 3.0
+>v 3.1
 
 ### 许可协议
 >[使用tp请您遵守LGPL协议，否则您将会被起诉。（点击可查看LGPL协议）](http://www.gnu.org/licenses/lgpl.html)

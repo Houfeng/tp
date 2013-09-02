@@ -6,25 +6,33 @@
 	<meta name=viewport content="width=device-width, initial-scale=1"></head>
 <body>
 	<script type="text/template" id="tple">
+		<% var cur= $$.current; %>
 		<%  
-		 for(var i in list){ 
-			var item=list[i]
+		 for(var i in $$.list){ 
+			var item=$$.list[i]
 		%>
 		<li><%= item %></li>
         <%}%>
+        <li> <%=cur%> </li>
 	 </script>
 	<ul id="temp" >
-		<%for(var i in list){ var item=list[i]%>
+		<% var cur= $$.current; %>
+		<%  
+		 for(var i in $$.list){ 
+			var item=$$.list[i]
+		%>
 		<li><%= item %></li>
-		<%}%>
+        <%}%>
+        <li> <%=cur%> </li>
 	</ul>
 	<script type="text/javascript" src="../src/tp.js"></script>
 	<script type="text/javascript">
-	 			tp.bind({
-	 				template:'tple',
-	 				element:'temp',
-	 				model:{list:['item-1','item-2','item-3']}
-	 			});
+		window._tp_test_model={list:['item-1','item-2','item-3'],current:'0'}
+		tp.bind({
+			template:'tple',
+			element:'temp',
+			model:_tp_test_model
+		});
 	</script>
 </body>
 </html>

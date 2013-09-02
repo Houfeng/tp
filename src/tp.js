@@ -1,5 +1,5 @@
 /**
- * tp 3.0
+ * tp 3.1
  * tp 模板引擎，最简洁高效的js模板引擎
  * tp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
@@ -8,6 +8,7 @@
  */
 
 (function(owner) {
+	"use strict";
 
 	function outTransferred(text) {
 		if (!text) return '';
@@ -45,13 +46,16 @@
 		};
 	};
 
-	function createHandler(_extends) {
+	function createHandler(func, model, _extends) {
 		var handler = function(text) {
 			handler.buffer.push(text);
 		};
 		for (var i in _extends) {
 			if (_extends[i]) extend(_extends[i], handler);
 		};
+		handler.func = func;
+		handler.model = model || {};
+		handler.buffer = [];
 		return handler;
 	};
 
@@ -66,35 +70,32 @@
 		var codeExp = new RegExp('(' + codeBegin + '(.|\\\n|\\\r)*?' + codeEnd + ')', 'gim');
 		var outCodeExp = new RegExp(codeBegin + '\\\s*=', 'gim');
 		//--
-		var buffer = ['with($.model){'];
+		var codeBuffer = ['"use strict"'];
 		var codeBlocks = source.match(codeExp) || [];
 		var textBlocks = source.replace(codeExp, '▎').split('▎') || [];
 		for (var i = 0; i < textBlocks.length; i++) {
 			var text = outTransferred(textBlocks[i]);
 			var code = codeBlocks[i];
-			buffer.push('$("' + text + '");');
+			codeBuffer.push('$("' + text + '")');
 			if (code != null) {
 				if (outCodeExp.test(code)) {
-					code = '$(' + code.replace(outCodeExp, '').replace(codeEndExp, '') + ');';
+					code = '$(' + code.replace(outCodeExp, '').replace(codeEndExp, '') + ')';
 				} else {
-					code = code.replace(codeBeginExp, '').replace(codeEndExp, '') + ';';
+					code = code.replace(codeBeginExp, '').replace(codeEndExp, '');
 				}
-				buffer.push(code);
+				codeBuffer.push(code);
 			}
 		};
-		buffer.push('};return $.buffer.join("");');
+		codeBuffer.push('return $.buffer.join("");');
 		//--
 		var func = function(model, _extend) {
-			var handler = createHandler([extendTable, option.extend, _extend]);
-			handler.func = func;
-			handler.buffer = [];
-			handler.model = model || {};
+			var handler = createHandler(func, model, [extendTable, option.extend, _extend]);
 			return tryInvoke(function() {
-				return (handler.func.src.call(handler.model, handler) || '');
+				return (handler.func.src.call(handler.model, handler, handler.model) || '');
 			}, "Template execute error");
 		};
 		tryInvoke(function() {
-			func.src = new Function("$", buffer.join(''));
+			func.src = new Function("$", "$$", codeBuffer.join(';'));
 		}, "Template compile error");
 		return func;
 	};
