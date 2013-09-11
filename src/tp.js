@@ -1,5 +1,5 @@
 /**
- * tp 3.1
+ * tp 3.2
  * tp 模板引擎，最简洁高效的js模板引擎
  * tp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
@@ -130,7 +130,6 @@
 		owner.query = function(id) {
 			return window.document.getElementById(id);
 		};
-		var templates = {};
 		owner.bind = function(option) {
 			option = option || {};
 			var query = option.query || owner.query;
@@ -139,11 +138,11 @@
 			option.tp = option.tp || option.template || option.el;
 			option.tp = (typeof option.tp === 'string') ? (query(option.tp) || option.tp) : option.tp;
 			if (!option.tp || !option.el) return;
-			templates[option.tp] = templates[option.tp] || compile(inTransferred(option.tp.innerHTML || option.tp), option);
+			var tempFunc = compile(inTransferred(option.tp.innerHTML || option.tp), option);
 			if (option.append) {
-				option.el.innerHTML += templates[option.tp](option.model);
+				option.el.innerHTML += tempFunc(option.model);
 			} else {
-				option.el.innerHTML = templates[option.tp](option.model);
+				option.el.innerHTML = tempFunc(option.model);
 			}
 		};
 		window.tp = owner;
