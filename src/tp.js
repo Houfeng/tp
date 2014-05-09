@@ -28,7 +28,7 @@
     function tryInvoke(fn, message) {
         try {
             return fn();
-        } catch(ex) {
+        } catch (ex) {
             ex.message = ex.message || "";
             ex.stack = ex.stack || "";
             ex.message = message + " : " + ex.message + "\r\n    " + ex.stack;
@@ -77,7 +77,7 @@
             var text = outTransferred(textBlocks[i]);
             var code = codeBlocks[i];
             codeBuffer.push('$("' + text + '")');
-            if (code !== null && typeof code !=='undefined') {
+            if (code !== null && typeof code !== 'undefined') {
                 if (outCodeExp.test(code)) {
                     code = '$(' + code.replace(outCodeExp, '').replace(codeEndExp, '') + ')';
                 } else {
@@ -91,14 +91,14 @@
         var func = function(model, _extend) {
             var handler = createHandler(func, model, [extendTable, option.extend, _extend]);
             return tryInvoke(function() {
-                return (handler.func.src.call(handler.model, handler, handler.model) || '');
-            },
-            "Template execute error");
+                    return (handler.func.src.call(handler.model, handler, handler.model) || '');
+                },
+                "Template execute error");
         };
         tryInvoke(function() {
-            func.src = new Function("$", "$$", codeBuffer.join(';'));
-        },
-        "Template compile error");
+                func.src = new Function("$", "$$", codeBuffer.join(';'));
+            },
+            "Template compile error");
         return func;
     }
 
@@ -106,28 +106,28 @@
     owner.codeEnd = '\%\>';
 
     /**
-	 * 扩展引擎功能
-	 */
+     * 扩展引擎功能
+     */
     owner.extend = extend;
 
     /**
-	 * 编译一个模板,source:模板源字符串
-	 */
+     * 编译一个模板,source:模板源字符串
+     */
     owner.compile = function(source, option) {
         return compile(source, option);
     };
 
     /**
-	 * 解析模板,source:模板源字符串,model:数据模型
-	 */
+     * 解析模板,source:模板源字符串,model:数据模型
+     */
     owner.parse = function(source, model, option, _extend) {
         var fn = compile(source, option);
         return fn(model, _extend);
     };
 
     /**
-	 * 如果在浏览器环境，添加针对DOM的扩展方法；
-	 */
+     * 如果在浏览器环境，添加针对DOM的扩展方法；
+     */
     if (typeof window !== 'undefined' && window.document) {
         owner.query = function(id) {
             return window.document.getElementById(id);
@@ -152,13 +152,13 @@
 
 })((function() {
     //支持CommonJS规范
-    var owner = (typeof exports === 'undefined') ? {}: exports;
+    var owner = (typeof exports === 'undefined') ? {} : exports;
     //支持AMD规范
     if (typeof define === 'function' && define.amd) {
         define('tp', [],
-        function() {
-            return owner;
-        });
+            function() {
+                return owner;
+            });
     }
     return owner;
 })());
