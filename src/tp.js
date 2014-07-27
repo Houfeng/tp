@@ -1,15 +1,16 @@
 /**
- * tp 3.2
+ * tp 3.3
  * tp 模板引擎，最简洁高效的js模板引擎
  * tp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
  * 邮箱：admin@xhou.net
- * 网站：http://houfeng.net , http://houfeng.net/tp
+ * 网站：http://houfeng.net , http://tp.houfeng.net
  */
 
 (function(owner) {
     "use strict";
 
+    //处理输出转义
     function outTransferred(text) {
         if (!text) return '';
         text = text.replace(new RegExp('\\{1}', 'gim'), '\\\\');
@@ -20,12 +21,14 @@
         return text;
     }
 
+    //处理输入转义
     function inTransferred(text) {
         if (!text) return '';
         return text.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
     }
 
-    function tryInvoke(fn, message) {
+    //执行一个函数
+    function controlledExecute(fn, message) {
         try {
             return fn();
         } catch (ex) {
@@ -36,16 +39,19 @@
         }
     }
 
-    var extendTable = {};
+    //全局扩展容器，全局扩展作用于所有编译或解释的模板
+    var gloablExtend = {};
 
+    //扩展函数，如果 det 为空就暂挂到 gloablExtend 上
     function extend(src, dst) {
         if (!src) return;
-        dst = dst || extendTable;
+        dst = dst || gloablExtend;
         for (var name in src) {
             dst[name] = src[name];
         }
     }
 
+    //创建模板上下文句柄，即模块中的 $
     function createHandler(func, model, _extends) {
         var handler = function(text) {
             handler.buffer.push(text);
@@ -59,6 +65,9 @@
         return handler;
     }
 
+    //编译一个模板
+    //编译模板时可以指定 option.extend 指定编译扩展
+    //编译扩展公针当前模板有效，无论第几次执行模板
     function compile(source, option) {
         source = source || '';
         option = option || {};
@@ -87,18 +96,19 @@
             }
         }
         codeBuffer.push('return $.buffer.join("");');
-        //--
-        var func = function(model, _extend) {
-            var handler = createHandler(func, model, [extendTable, option.extend, _extend]);
-            return tryInvoke(function() {
-                    return (handler.func.src.call(handler.model, handler, handler.model) || '');
-                },
-                "Template execute error");
+        //构造模板函数
+        //模板执行时，可以指定 extend 执行扩展仅对本次执行有效
+        var func = function(model, extend) {
+            var handler = createHandler(func, model, [gloablExtend, option.extend, extend]);
+            return controlledExecute(function() {
+                //this 当前数据模型，$ 参数为 Handler，$$ 参数为当前数据模型
+                return (handler.func.src.call(handler.model, handler, handler.model) || '');
+            }, "Template execute error");
         };
-        tryInvoke(function() {
-                func.src = new Function("$", "$$", codeBuffer.join(';'));
-            },
-            "Template compile error");
+        //编译模板函数
+        controlledExecute(function() {
+            func.src = new Function("$", "$$", codeBuffer.join(';'));
+        }, "Template compile error");
         return func;
     }
 
@@ -111,7 +121,9 @@
     owner.extend = extend;
 
     /**
-     * 编译一个模板,source:模板源字符串
+     * 编译一个模板,source:模板源字符串,option编译选项
+     * 编译模板时可以指定 option.extend 指定编译扩展
+     * 编译扩展公针当前模板有效，无论第几次执行模板
      */
     owner.compile = function(source, option) {
         return compile(source, option);
@@ -119,10 +131,12 @@
 
     /**
      * 解析模板,source:模板源字符串,model:数据模型
+     * option 为编译选项，编译模板时可以指定 option.extend 指定编译扩展
+     * 模板执行时，可以指定 extend 执行扩展仅对本次执行有效
      */
-    owner.parse = function(source, model, option, _extend) {
+    owner.parse = function(source, model, option, extend) {
         var fn = compile(source, option);
-        return fn(model, _extend);
+        return fn(model, extend);
     };
 
     /**
@@ -147,18 +161,29 @@
                 option.el.innerHTML = tempFunc(option.model);
             }
         };
-        window.tp = owner;
     }
 
 })((function() {
+    var owner = {};
     //支持CommonJS规范
-    var owner = (typeof exports === 'undefined') ? {} : exports;
+    if (typeof exports !== 'undefined') {
+        owner = exports;
+        owner.env = owner.env || [];
+        owner.env.push("commaonjs");
+    }
     //支持AMD规范
     if (typeof define === 'function' && define.amd) {
-        define('tp', [],
-            function() {
-                return owner;
-            });
+        owner.env = owner.env || [];
+        owner.env.push("amd");
+        define('tp', [], function() {
+            return owner;
+        });
+    }
+    //常规方式，挂在 this 对象上
+    if (owner.env == null || owner.env.length < 1) {
+        owner.env = owner.env || [];
+        owner.env.push("general");
+        this.tp = owner;
     }
     return owner;
 })());
