@@ -29,7 +29,7 @@
       </header>
       <section>
         <h3>
-<a name="%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0tp%E7%9A%84%E4%B8%96%E7%95%8C" class="anchor" href="#%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0tp%E7%9A%84%E4%B8%96%E7%95%8C"><span class="octicon octicon-link"></span></a>欢迎来到tp的世界</h3>
+<a id="tp-模板引擎" class="anchor" href="#tp-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E" aria-hidden="true"><span class="octicon octicon-link"></span></a>TP 模板引擎</h3>
 
 <blockquote>
 <p>欢迎使用tp! 最轻量，简洁，高效的javascript模板引擎！
@@ -37,7 +37,7 @@
 </blockquote>
 
 <h3>
-<a name="%E7%AE%80%E4%BB%8B" class="anchor" href="#%E7%AE%80%E4%BB%8B"><span class="octicon octicon-link"></span></a>简介</h3>
+<a id="简介" class="anchor" href="#%E7%AE%80%E4%BB%8B" aria-hidden="true"><span class="octicon octicon-link"></span></a>简介</h3>
 
 <pre><code>+ 轻量，tp是目前能见到最轻量的javascript模板引擎，只有一个不足1.5k的文件。
 + 简洁，tp的语法非常简单，对于一个熟悉html、js的开发人员来说学习难度为0。
@@ -46,21 +46,21 @@
 </code></pre>
 
 <h3>
-<a name="%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC" class="anchor" href="#%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC"><span class="octicon octicon-link"></span></a>最新版本</h3>
+<a id="最新版本" class="anchor" href="#%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>最新版本</h3>
 
 <blockquote>
-<p>v 3.2</p>
+<p>v 3.4</p>
 </blockquote>
 
 <h3>
-<a name="%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE" class="anchor" href="#%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE"><span class="octicon octicon-link"></span></a>许可协议</h3>
+<a id="许可协议" class="anchor" href="#%E8%AE%B8%E5%8F%AF%E5%8D%8F%E8%AE%AE" aria-hidden="true"><span class="octicon octicon-link"></span></a>许可协议</h3>
 
 <blockquote>
 <p><a href="http://www.gnu.org/licenses/lgpl.html">请您遵守LGPL协议，（点击可查看LGPL协议）</a></p>
 </blockquote>
 
 <h3>
-<a name="%E6%94%AF%E6%8C%81" class="anchor" href="#%E6%94%AF%E6%8C%81"><span class="octicon octicon-link"></span></a>支持</h3>
+<a id="支持" class="anchor" href="#%E6%94%AF%E6%8C%81" aria-hidden="true"><span class="octicon octicon-link"></span></a>支持</h3>
 
 <pre><code>+ 您可以发邮件到 admin@xhou.net
 + 或者访问 http://www.houfeng.net
@@ -68,10 +68,10 @@
 </code></pre>
 
 <h3>
-<a name="%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97" class="anchor" href="#%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97"><span class="octicon octicon-link"></span></a>使用指南</h3>
+<a id="使用指南" class="anchor" href="#%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97" aria-hidden="true"><span class="octicon octicon-link"></span></a>使用指南</h3>
 
 <h5>
-<a name="%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8" class="anchor" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="octicon octicon-link"></span></a>如何使用？</h5>
+<a id="如何使用" class="anchor" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>如何使用？</h5>
 
 <pre><code>+ 下载tp
 + 将tp.js或tp-min.js放到项目中合适的位置。
@@ -79,13 +79,12 @@
 </code></pre>
 
 <h4>
-<a name="%E8%A7%A3%E6%9E%90tpparse" class="anchor" href="#%E8%A7%A3%E6%9E%90tpparse"><span class="octicon octicon-link"></span></a>解析(tp.parse)</h4>
+<a id="解析tpparse" class="anchor" href="#%E8%A7%A3%E6%9E%90tpparse" aria-hidden="true"><span class="octicon octicon-link"></span></a>解析(tp.parse)</h4>
 
 <p>代码:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">html</span><span class="o">=</span><span class="s1">'&lt;div&gt;My name is &lt;% $(name) %&gt;&lt;/div&gt;'</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">rs</span><span class="o">=</span><span class="nx">tp</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">html</span><span class="p">,{</span><span class="nx">name</span><span class="o">:</span><span class="s1">'tp'</span><span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> html<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>&lt;div&gt;My name is &lt;% $(name) %&gt;&lt;/div&gt;<span class="pl-pds">'</span></span>;
+<span class="pl-s">var</span> rs<span class="pl-k">=</span>tp.<span class="pl-s3">parse</span>(html,{name<span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">'</span>tp<span class="pl-pds">'</span></span>});</pre></div>
 
 <p>结果:</p>
 
@@ -93,14 +92,13 @@
 </code></pre>
 
 <h4>
-<a name="%E7%BC%96%E8%AF%91tpcomplite" class="anchor" href="#%E7%BC%96%E8%AF%91tpcomplite"><span class="octicon octicon-link"></span></a>编译(tp.complite)</h4>
+<a id="编译tpcomplite" class="anchor" href="#%E7%BC%96%E8%AF%91tpcomplite" aria-hidden="true"><span class="octicon octicon-link"></span></a>编译(tp.complite)</h4>
 
 <p>代码:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">html</span><span class="o">=</span><span class="s1">'&lt;div&gt;My name is &lt;% $(name) %&gt;&lt;/div&gt;'</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">fn</span><span class="o">=</span><span class="nx">tp</span><span class="p">.</span><span class="nx">complite</span><span class="p">(</span><span class="nx">html</span><span class="p">);</span>
-<span class="kd">var</span> <span class="nx">rs</span><span class="o">=</span><span class="nx">fn</span><span class="p">({</span><span class="nx">name</span><span class="o">:</span><span class="s1">'tp'</span><span class="p">});</span>
-</pre></div>
+<div class="highlight highlight-javascript"><pre><span class="pl-s">var</span> html<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>&lt;div&gt;My name is &lt;% $(name) %&gt;&lt;/div&gt;<span class="pl-pds">'</span></span>;
+<span class="pl-s">var</span> fn<span class="pl-k">=</span>tp.complite(html);
+<span class="pl-s">var</span> rs<span class="pl-k">=</span>fn({name<span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">'</span>tp<span class="pl-pds">'</span></span>});</pre></div>
 
 <p>结果:</p>
 
@@ -109,44 +107,41 @@ rs: “&lt;div&gt;My name is tp&lt;/div&gt;”
 </code></pre>
 
 <h4>
-<a name="html%E5%85%83%E7%B4%A0" class="anchor" href="#html%E5%85%83%E7%B4%A0"><span class="octicon octicon-link"></span></a>HTML元素</h4>
+<a id="html元素" class="anchor" href="#html%E5%85%83%E7%B4%A0" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTML元素</h4>
 
 <p>HTML:</p>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">"list-template"</span> <span class="na">type=</span><span class="s">'text/template'</span><span class="nt">&gt;</span>
-<span class="o">&lt;%</span> <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="k">this</span> <span class="o">%&gt;</span>
-<span class="o">&lt;</span><span class="nx">li</span><span class="o">&gt;&lt;%</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="o">%&gt;&lt;</span><span class="err">/li&gt;</span>
-<span class="o">&lt;%</span> <span class="p">}</span> <span class="o">%&gt;</span>
-<span class="nt">&lt;/script&gt;</span>
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>list-template<span class="pl-pds">"</span></span> <span class="pl-e">type</span>=<span class="pl-s1"><span class="pl-pds">'</span>text/template<span class="pl-pds">'</span></span>&gt;
+&lt;% for(var i in this %&gt;
+&lt;<span class="pl-ent">li</span>&gt;&lt;% $(this[i]) %&gt;&lt;/<span class="pl-ent">li</span>&gt;
+&lt;% } %&gt;
+&lt;/<span class="pl-ent">script</span>&gt;
 
-<span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"list"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/ul&gt;</span>
-</pre></div>
+&lt;<span class="pl-ent">ul</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>list<span class="pl-pds">"</span></span>&gt;
+&lt;/<span class="pl-ent">ul</span>&gt;</pre></div>
 
 <p>代码:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="c1">//绑定数据:</span>
-<span class="nx">tp</span><span class="p">.</span><span class="nx">bind</span><span class="p">({</span>
-    <span class="nx">template</span><span class="o">:</span><span class="s1">'list-template'</span><span class="p">,</span>
-    <span class="nx">element</span><span class="o">:</span><span class="s1">'list'</span><span class="p">,</span>
-    <span class="nx">model</span><span class="o">:</span><span class="p">[</span><span class="s2">"item-1"</span><span class="p">,</span><span class="s2">"item-2"</span><span class="p">]</span>
-<span class="p">});</span> 
-<span class="c1">//追加绑定数据:</span>
-<span class="nx">tp</span><span class="p">.</span><span class="nx">bind</span><span class="p">({</span>
-    <span class="nx">template</span><span class="o">:</span><span class="s1">'list-template'</span><span class="p">,</span>
-    <span class="nx">element</span><span class="o">:</span><span class="s1">'list'</span><span class="p">,</span>
-    <span class="nx">model</span><span class="o">:</span><span class="p">[</span><span class="s2">"item-1"</span><span class="p">,</span><span class="s2">"item-2"</span><span class="p">],</span>
-    <span class="nx">append</span><span class="o">:</span><span class="kc">true</span>
-<span class="p">});</span> 
-</pre></div>
+<div class="highlight highlight-javascript"><pre><span class="pl-c">//绑定数据:</span>
+tp.bind({
+    template<span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">'</span>list-template<span class="pl-pds">'</span></span>,
+    element<span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">'</span>list<span class="pl-pds">'</span></span>,
+    model<span class="pl-k">:</span>[<span class="pl-s1"><span class="pl-pds">"</span>item-1<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>item-2<span class="pl-pds">"</span></span>]
+}); 
+<span class="pl-c">//追加绑定数据:</span>
+tp.bind({
+    template<span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">'</span>list-template<span class="pl-pds">'</span></span>,
+    element<span class="pl-k">:</span><span class="pl-s1"><span class="pl-pds">'</span>list<span class="pl-pds">'</span></span>,
+    model<span class="pl-k">:</span>[<span class="pl-s1"><span class="pl-pds">"</span>item-1<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>item-2<span class="pl-pds">"</span></span>],
+    append<span class="pl-k">:</span><span class="pl-c1">true</span>
+}); </pre></div>
 
 <p>结果:</p>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"list"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;li&gt;</span>item-1<span class="nt">&lt;/li&gt;</span>
-<span class="nt">&lt;li&gt;</span>item-2<span class="nt">&lt;/li&gt;</span>
-<span class="nt">&lt;/ul&gt;</span>
-</pre></div>
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">ul</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>list<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">li</span>&gt;item-1&lt;/<span class="pl-ent">li</span>&gt;
+&lt;<span class="pl-ent">li</span>&gt;item-2&lt;/<span class="pl-ent">li</span>&gt;
+&lt;/<span class="pl-ent">ul</span>&gt;</pre></div>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/Houfeng">Houfeng</a></p>
