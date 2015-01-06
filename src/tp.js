@@ -1,5 +1,5 @@
 /**
- * tp 3.3
+ * tp 3.4
  * tp 模板引擎，最简洁高效的js模板引擎
  * tp 可应用于Node.js，也可以在浏览器环境下使用。
  * 作者：侯锋
@@ -9,6 +9,9 @@
 
 (function(owner) {
     "use strict";
+
+    //引擎版本
+    owner.version = '3.4';
 
     //处理输出转义
     function outTransferred(text) {
@@ -75,11 +78,12 @@
         var codeEnd = option.codeEnd || owner.codeEnd;
         var codeBeginExp = new RegExp(codeBegin, 'gim');
         var codeEndExp = new RegExp(codeEnd, 'gim');
-        //提出代码块（包括开始、结束标记）
+        //提取代码块（包括开始、结束标记）
         var codeExp = new RegExp('(' + codeBegin + '(.|\\\n|\\\r)*?' + codeEnd + ')', 'gim');
+        //验证输出表达式
         var outCodeExp = new RegExp(codeBegin + '\\\s*=', 'gim');
         //--
-        var codeBuffer = ['"use strict"'];
+        var codeBuffer = [];
         var codeBlocks = source.match(codeExp) || [];
         var textBlocks = source.replace(codeExp, '▎').split('▎') || [];
         for (var i = 0; i < textBlocks.length; i++) {
