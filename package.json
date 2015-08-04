@@ -1,0 +1,33 @@
+{
+    "name": "tpjs",
+    "rawName": "tp",
+    "version": "3.6.1",
+    "description": "最简洁高效的js模板引擎!",
+    "main": "./lib/tp.js",
+    "scripts": {
+        "test": "echo \"There is no test\" && exit 1"
+    },
+    "keywords": [
+        "tp",
+        "template",
+        "engine",
+        "tmpl",
+        "javaScript",
+        "html"
+    ],
+    "author": {
+        "name": "Houfeng",
+        "email": "admin@xhou.net"
+    },
+    "homepage": "http://houfeng.net/tp",
+    "bugs": {
+        "url": "https://github.com/Houfeng/tp/issues",
+        "email": "admin@xhou.net"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Houfeng/tp.git"
+    },
+    "dependencies": {}
+}
