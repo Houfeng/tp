@@ -8,43 +8,52 @@ var header = require('gulp-header');
 var replace = require('gulp-replace');
 
 var banner = ['/**',
-    ' * <%= pkg.rawName %>.js - <%= pkg.description %>',
-    ' * @version v<%= pkg.version %>',
-    ' * @link <%= pkg.homepage %>',
-    ' * @license <%= pkg.license %>',
-    ' * @author <%= pkg.author.name %>',
-    ' * @email <%= pkg.author.email %>',
+    ' * <%= rawName %>.js - <%= description %>',
+    ' * @version v<%= version %>',
+    ' * @link <%= homepage %>',
+    ' * @license <%= license %>',
+    ' * @author <%= author.name %>',
+    ' * @email <%= author.email %>',
     ' */',
     ''
 ].join('\r\n');
 
-gulp.task('clear', function(cb) {
+gulp.task('clear_build', function(cb) {
     del(['build'], cb);
 });
 
+gulp.task('clear_lib', function(cb) {
+    del(['lib'], cb);
+});
+
+gulp.task('clear', ['clear_build', 'clear_lib']);
+
 gulp.task('build', ["clear"], function() {
-    gulp.src("./lib/**/*.js")
-        .pipe(concat("all.js"))
-        .pipe(rename(pkg.rawName + ".js"))
-        .pipe(header(banner, {
-            pkg: pkg
-        }))
-        .pipe(replace('/*{{version}}*/', 'owner.version = "' + pkg.version + '";'))
+    //tp
+    gulp.src("./src/tp.js")
+        .pipe(replace('{{version}}', pkg.version))
+        .pipe(header(banner, pkg))
         .pipe(gulp.dest("./build/"))
         .pipe(uglify())
+        .pipe(header(banner, pkg))
+        .pipe(gulp.dest("./lib/"))
         .pipe(rename(pkg.rawName + ".min.js"))
-        .pipe(header(banner, {
-            pkg: pkg
-        }))
         .pipe(gulp.dest("./build/"));
+    //cli
+    gulp.src("./src/cli.js")
+        .pipe(replace('{{version}}', pkg.version))
+        .pipe(uglify())
+        .pipe(header(banner, pkg))
+        .pipe(gulp.dest("./bin/"));
 });
 
 gulp.task('readme', function(cb) {
-    gulp.src("./README.md")
-        .pipe(replace('{{version}}', +pkg.version))
+    gulp.src("./README.src.md")
+        .pipe(replace('{{version}}', pkg.version))
+        .pipe(rename("README.md"))
         .pipe(gulp.dest("./"));
 });
 
-gulp.task('default', ["clear", "build"]);
+gulp.task('default', ["clear", "build", "readme"]);
 
 //end

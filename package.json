@@ -1,9 +1,12 @@
 {
     "name": "tpjs",
     "rawName": "tp",
-    "version": "3.6.1",
+    "version": "3.6.2",
     "description": "最简洁高效的js模板引擎!",
     "main": "./lib/tp.js",
+    "bin": {
+        "tp": "./bin/cli.js"
+    },
     "scripts": {
         "test": "echo \"There is no test\" && exit 1"
     },
@@ -29,5 +32,16 @@
         "type": "git",
         "url": "https://github.com/Houfeng/tp.git"
     },
-    "dependencies": {}
+    "dependencies": {},
+    "devDependencies": {
+        "del": "^1.2.0",
+        "gulp": "^3.9.0",
+        "gulp-concat": "^2.6.0",
+        "gulp-header": "^1.2.2",
+        "gulp-jshint": "^1.11.2",
+        "gulp-uglify": "^1.2.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-replace": "^0.5.3",
+        "gulp-util": "^3.0.6"
+    }
 }

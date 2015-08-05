@@ -1,16 +1,8 @@
-/**
- * tp.js - 最简洁高效的js模板引擎!
- * @version v3.6.2
- * @link http://houfeng.net/tp
- * @license MIT
- * @author Houfeng
- * @email admin@xhou.net
- */
 (function(owner) {
     "use strict";
 
     //引擎版本
-    owner.version = '3.6.2';
+    owner.version = '{{version}}';
 
     //处理输出转义
     function outTransferred(text) {
