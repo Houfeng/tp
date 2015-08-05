@@ -120,6 +120,14 @@
         //构造模板函数
         //模板执行时，可以指定 execOptions, execOptions.extend 执行扩展仅对本次执行有效
         var func = function(model, execOptions) {
+            return func.exec(model, execOptions);
+        };
+        //编译模板函数
+        controlledExecute(function() {
+            func.src = new Function("$", "$$", codeBuffer.join(';'));
+        }, "Template compile error");
+        //生成执行函数
+        func.exec = function(model, execOptions) {
             execOptions = execOptions || {};
             var handler = createHandler(func, model, [gloablExtend, options.extend, execOptions.extend]);
             return controlledExecute(function() {
@@ -128,10 +136,6 @@
                 return execOptions.returnHandler ? handler : handler.result;
             }, "Template execute error");
         };
-        //编译模板函数
-        controlledExecute(function() {
-            func.src = new Function("$", "$$", codeBuffer.join(';'));
-        }, "Template compile error");
         return func;
     }
 
@@ -161,6 +165,12 @@
         var fn = compile(source, options);
         return fn(model, execOptions);
     };
+
+    /**
+     * 非公开 API 用于 cli
+     */
+    owner._createHandler = createHandler;
+    owner._controlledExecute = controlledExecute;
 
     /**
      * 如果在浏览器环境，添加针对DOM的扩展方法；

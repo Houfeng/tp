@@ -26,7 +26,11 @@ gulp.task('clear_lib', function(cb) {
     del(['lib'], cb);
 });
 
-gulp.task('clear', ['clear_build', 'clear_lib']);
+gulp.task('clear_bin', function(cb) {
+    del(['bin'], cb);
+});
+
+gulp.task('clear', ['clear_build', 'clear_lib', 'clear_bin']);
 
 gulp.task('build', ["clear"], function() {
     //tp
@@ -39,6 +43,17 @@ gulp.task('build', ["clear"], function() {
         .pipe(gulp.dest("./lib/"))
         .pipe(rename(pkg.rawName + ".min.js"))
         .pipe(gulp.dest("./build/"));
+    //compile.js
+    gulp.src("./src/compile.js")
+        .pipe(replace('{{version}}', pkg.version))
+        .pipe(uglify())
+        .pipe(header(banner, pkg))
+        .pipe(gulp.dest("./lib/"));
+    //compile.tp
+    gulp.src("./src/compile.tp")
+        .pipe(replace('{{version}}', pkg.version))
+        .pipe(header(banner, pkg))
+        .pipe(gulp.dest("./lib/"));
     //cli
     gulp.src("./src/cli.js")
         .pipe(replace('{{version}}', pkg.version))
