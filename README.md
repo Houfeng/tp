@@ -1,20 +1,16 @@
 ### TP 模板引擎
->欢迎使用tp! 最轻量，简洁，高效的javascript模板引擎！
->如同“tp”的名字，“轻量、简洁、高效”是tp的哲学！
+>Tp 是一个 “轻量，简洁，高效” 的 javascript 模板引擎！
 
 ### 简介
 ```
 + 轻量，tp是目前能见到最轻量的javascript模板引擎，只有一个不足1.5k的文件。
-+ 简洁，tp的语法非常简单，对于一个熟悉html、js的开发人员来说学习难度为0。
++ 简洁，tp的语法非常简单，对于一个熟悉html、js的开发人员来说学习难度为 0。
 + 高效，tp支持模板预编译，快于任何一个你所见过的javascript模板引擎。
 + 另外，tp同时支持在浏览器环境使用及服务端javascript环境(Node.js)使用。
 ```
 
 ### 最新版本
 >v 3.6.9
-
-### 许可协议
->[请您遵守LGPL协议，（点击可查看LGPL协议）](http://www.gnu.org/licenses/lgpl.html)
 
 ### 支持
 ```
@@ -23,13 +19,18 @@
 + 关注微博 http://weibo.com/houfeng
 ```
 
-### 使用指南
+### 在浏览器中吏用
 
-##### 如何使用？
+#### 在页面中引入
 ```
 + 下载tp
 + 将tp.js或tp-min.js放到项目中合适的位置。
 + 在相关页面用<script src='tp的url'></script>引入tp。
+```
+
+#### AMD/CMD 方式引用
+```javascript
+var tp = require('相对路径');
 ```
 
 #### 解析(tp.parse)
@@ -43,11 +44,11 @@ var rs=tp.parse(html,{name:'tp'});
 rs: “<div>My name is tp</div>”
 ```
 
-#### 编译(tp.complite)
+#### 编译(tp.compile)
 代码:
 ```javascript
 var html='<div>My name is <% $(name) %></div>';
-var fn=tp.complite(html);
+var fn=tp.compile(html);
 var rs=fn({name:'tp'});
 ```
 结果:
@@ -92,3 +93,32 @@ tp.bind({
 <li>item-2</li>
 </ul>
 ```
+
+### 在 Node.js 中使用
+
+#### 安装
+```javascript
+[sudo] npm install tpjs [-g]
+```
+
+#### 引用
+```javascript
+var tp = require('tpjs');
+
+//解析
+var rs = tp.parse(html,options);
+//预编译
+var fn = tp.compile(html,options);
+```
+
+#### 命令行工具
+使用命令行工具需要全局安装 tpjs，如下
+```javascript
+[sudo] npm install tpjs -g
+```
+CLI 说明
+```javascript
+tp <src> <dst>
+```
+1. src: 源文件路径，相对于当前工作目录
+2. dst: 输出的目标路径，相对于当前工作目录
