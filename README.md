@@ -1,6 +1,8 @@
 ### TP 模板引擎
 >Tp 是一个 “轻量，简洁，高效” 的 javascript 模板引擎！
 
+[![npm version](https://badge.fury.io/js/tpjs.svg)](http://badge.fury.io/js/tpjs)  
+
 ### 简介
 ```
 + 轻量，tp是目前能见到最轻量的javascript模板引擎，只有一个不足1.5k的文件。
@@ -9,10 +11,7 @@
 + 另外，tp同时支持在浏览器环境使用及服务端javascript环境(Node.js)使用。
 ```
 
-### 最新版本
->v 3.6.9
-
-### 支持
+### 联系作者
 ```
 + 您可以发邮件到 admin@xhou.net
 + 或者访问 http://www.houfeng.net
