@@ -1,6 +1,6 @@
 /**
  * tp.js - 最简洁高效的js模板引擎!
- * @version v3.6.2
+ * @version v3.6.9
  * @link http://houfeng.net/tp
  * @license MIT
  * @author Houfeng
@@ -10,7 +10,7 @@
     "use strict";
 
     //引擎版本
-    owner.version = '3.6.2';
+    owner.version = '3.6.9';
 
     //处理输出转义
     function outTransferred(text) {
@@ -79,7 +79,7 @@
             if (_extends[i]) extend(_extends[i], handler);
         }
         handler.func = func;
-        handler.model = model || {};
+        handler.model = ((model !== null && model != undefined) ? model : '');
         handler.buffer = [];
         return handler;
     }
@@ -171,6 +171,7 @@
      */
     owner._createHandler = createHandler;
     owner._controlledExecute = controlledExecute;
+    owner._inArray = inArray;
 
     /**
      * 如果在浏览器环境，添加针对DOM的扩展方法；

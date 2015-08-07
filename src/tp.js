@@ -71,7 +71,7 @@
             if (_extends[i]) extend(_extends[i], handler);
         }
         handler.func = func;
-        handler.model = model || {};
+        handler.model = ((model !== null && model != undefined) ? model : '');
         handler.buffer = [];
         return handler;
     }
@@ -163,6 +163,7 @@
      */
     owner._createHandler = createHandler;
     owner._controlledExecute = controlledExecute;
+    owner._inArray = inArray;
 
     /**
      * 如果在浏览器环境，添加针对DOM的扩展方法；

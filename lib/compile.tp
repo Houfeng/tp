@@ -1,14 +1,54 @@
-/**
- * tp.js - 最简洁高效的js模板引擎!
- * @version v3.6.2
- * @link http://houfeng.net/tp
- * @license MIT
- * @author Houfeng
- * @email admin@xhou.net
- */
 (function() {
-    var createHandler = <%= this.createHandler %>;
-    var controlledExecute = <%= this.controlledExecute %>;
+    //检查是否在数组中
+    function inArray(array, item) {
+        for (var i in array) {
+            if (array[i] === item) {
+                return true;
+            }
+        };
+        return false;
+    };
+    //执行一个函数
+    function controlledExecute(fn, message) {
+        try {
+            return fn();
+        } catch (ex) {
+            ex.message = ex.message || "";
+            ex.stack = ex.stack || "";
+            ex.message = message + " : " + ex.message + "\r\n    " + ex.stack;
+            throw ex;
+        }
+    }
+    //全局扩展容器，全局扩展作用于所有编译或解释的模板
+    var gloablExtend = {};
+    //扩展函数，如果 det 为空就暂挂到 gloablExtend 上
+    function extend(src, dst) {
+        if (!src) return;
+        dst = dst || gloablExtend;
+        for (var name in src) {
+            if (!inArray(['func', 'push', 'model', 'buffer'], name)) {
+                dst[name] = src[name];
+            } else {
+                throw 'Can not expand "' + name + ' function"';
+            }
+        }
+    }
+    //创建模板上下文句柄，即模块中的 $
+    function createHandler(func, model, _extends) {
+        var handler = function(text) {
+            handler.push(text);
+        };
+        handler.push = function(text) {
+            handler.buffer.push(text);
+        };
+        for (var i in _extends) {
+            if (_extends[i]) extend(_extends[i], handler);
+        }
+        handler.func = func;
+        handler.model = ((model !== null && model != undefined) ? model : '');
+        handler.buffer = [];
+        return handler;
+    }
     var func = function(model, execOptions) {
         return func.exec(model, execOptions);
     };

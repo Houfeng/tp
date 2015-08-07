@@ -52,13 +52,12 @@ gulp.task('build', ["clear"], function() {
     //compile.tp
     gulp.src("./src/compile.tp")
         .pipe(replace('{{version}}', pkg.version))
-        .pipe(header(banner, pkg))
         .pipe(gulp.dest("./lib/"));
     //cli
     gulp.src("./src/cli.js")
         .pipe(replace('{{version}}', pkg.version))
         .pipe(uglify())
-        .pipe(header(banner, pkg))
+        .pipe(header('#!/usr/bin/env node\n'))
         .pipe(gulp.dest("./bin/"));
 });
 

@@ -11,7 +11,7 @@
 ```
 
 ### 最新版本
->v 3.6.2
+>v 3.6.9
 
 ### 许可协议
 >[请您遵守LGPL协议，（点击可查看LGPL协议）](http://www.gnu.org/licenses/lgpl.html)

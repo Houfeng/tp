@@ -1,9 +1,2 @@
-/**
- * tp.js - 最简洁高效的js模板引擎!
- * @version v3.6.2
- * @link http://houfeng.net/tp
- * @license MIT
- * @author Houfeng
- * @email admin@xhou.net
- */
-!function(){var e=require("path"),r=require("fs"),i=require("real-utils"),s=require("cmdline"),l=require("../package.json"),o=require("../lib/compile"),a=new s,n=process.cwd(),u=a.args[0],t=a.args[1];if(a.options.has("-v"))return console.log(l.rawName+" "+l.version);if(i.isNull(u)||i.isNull(t))return console.log("usage: tp <src> <dst>");u=e.resolve(n,u),t=e.resolve(n,t);var c=e.basename(t).split(".")[0],g=r.readFileSync(u).toString(),p=o(c,g);r.writeFileSync(t,p)}();
+#!/usr/bin/env node
+var path=require("path"),fs=require("fs"),utils=require("real-utils"),CmdLine=require("cmdline"),pkg=require("../package.json"),compile=require("../lib/compile"),cmdLine=new CmdLine,cwd=process.cwd(),src=cmdLine.args[0],dst=cmdLine.args[1];if(cmdLine.options.has("-v"))console.log(pkg.rawName+" "+pkg.version);else if(utils.isNull(src)||utils.isNull(dst))console.log("usage: tp <src> <dst>");else{src=path.resolve(cwd,src),dst=path.resolve(cwd,dst);var funcName=path.basename(dst).split(".")[0],srcBuffer=fs.readFileSync(src).toString(),dstBuffer=compile(funcName,srcBuffer);fs.writeFileSync(dst,dstBuffer)}

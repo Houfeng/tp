@@ -1,7 +1,7 @@
 {
   "name": "tpjs",
   "rawName": "tp",
-  "version": "3.6.2",
+  "version": "3.6.9",
   "description": "最简洁高效的js模板引擎!",
   "main": "./lib/tp.js",
   "bin": {
@@ -34,7 +34,8 @@
   },
   "dependencies": {
     "cmdline": "0.0.4",
-    "real-utils": "0.0.1"
+    "real-utils": "0.0.1",
+    "uglify-js": "^2.4.24"
   },
   "devDependencies": {
     "del": "^1.2.0",
