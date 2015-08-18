@@ -37,8 +37,7 @@
             return fn();
         } catch (ex) {
             ex.message = ex.message || "";
-            ex.stack = ex.stack || "";
-            ex.message = message + " : " + ex.message + "\r\n    " + ex.stack;
+            ex.message = message + " : " + ex.message;
             throw ex;
         }
     }
