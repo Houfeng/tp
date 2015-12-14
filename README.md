@@ -60,7 +60,7 @@ rs: “<div>My name is tp</div>”
 HTML:
 ```html
 <script id="list-template" type='text/template'>
-<% for(var i in this %>
+<% for(var i in this){ %>
 <li><% $(this[i]) %></li>
 <% } %>
 </script>
