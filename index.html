@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -68,15 +68,15 @@
 <h4>
 <a id="amdcmd-方式引用" class="anchor" href="#amdcmd-%E6%96%B9%E5%BC%8F%E5%BC%95%E7%94%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>AMD/CMD 方式引用</h4>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> tp <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>相对路径<span class="pl-pds">'</span></span>);</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> tp <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>相对路径<span class="pl-pds">'</span></span>);</pre></div>
 
 <h4>
 <a id="解析tpparse" class="anchor" href="#%E8%A7%A3%E6%9E%90tpparse" aria-hidden="true"><span class="octicon octicon-link"></span></a>解析(tp.parse)</h4>
 
 <p>代码:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> html<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>&lt;div&gt;My name is &lt;% $(name) %&gt;&lt;/div&gt;<span class="pl-pds">'</span></span>;
-<span class="pl-k">var</span> rs<span class="pl-k">=</span>tp.<span class="pl-c1">parse</span>(html,{name<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>tp<span class="pl-pds">'</span></span>});</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> html<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>&lt;div&gt;My name is &lt;% $(name) %&gt;&lt;/div&gt;<span class="pl-pds">'</span></span>;
+<span class="pl-k">var</span> rs<span class="pl-k">=</span><span class="pl-smi">tp</span>.<span class="pl-c1">parse</span>(html,{name<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>tp<span class="pl-pds">'</span></span>});</pre></div>
 
 <p>结果:</p>
 
@@ -88,9 +88,9 @@
 
 <p>代码:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> html<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>&lt;div&gt;My name is &lt;% $(name) %&gt;&lt;/div&gt;<span class="pl-pds">'</span></span>;
-<span class="pl-k">var</span> fn<span class="pl-k">=</span>tp.<span class="pl-c1">compile</span>(html);
-<span class="pl-k">var</span> rs<span class="pl-k">=</span>fn({name<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>tp<span class="pl-pds">'</span></span>});</pre></div>
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> html<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>&lt;div&gt;My name is &lt;% $(name) %&gt;&lt;/div&gt;<span class="pl-pds">'</span></span>;
+<span class="pl-k">var</span> fn<span class="pl-k">=</span><span class="pl-smi">tp</span>.<span class="pl-c1">compile</span>(html);
+<span class="pl-k">var</span> rs<span class="pl-k">=</span><span class="pl-en">fn</span>({name<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>tp<span class="pl-pds">'</span></span>});</pre></div>
 
 <p>结果:</p>
 
@@ -103,8 +103,8 @@ rs: “&lt;div&gt;My name is tp&lt;/div&gt;”
 
 <p>HTML:</p>
 
-<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>list-template<span class="pl-pds">"</span></span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">'</span>text/template<span class="pl-pds">'</span></span>&gt;
-&lt;% for(var i in this %&gt;
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>list-template<span class="pl-pds">"</span></span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">'</span>text/template<span class="pl-pds">'</span></span>&gt;
+&lt;% for(var i in this){ %&gt;
 &lt;<span class="pl-ent">li</span>&gt;&lt;% $(this[i]) %&gt;&lt;/<span class="pl-ent">li</span>&gt;
 &lt;% } %&gt;
 &lt;/<span class="pl-ent">script</span>&gt;
@@ -114,14 +114,14 @@ rs: “&lt;div&gt;My name is tp&lt;/div&gt;”
 
 <p>代码:</p>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-c">//绑定数据:</span>
-tp.bind({
+<div class="highlight highlight-source-js"><pre><span class="pl-c">//绑定数据:</span>
+<span class="pl-smi">tp</span>.<span class="pl-en">bind</span>({
     template<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>list-template<span class="pl-pds">'</span></span>,
     element<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>list<span class="pl-pds">'</span></span>,
     model<span class="pl-k">:</span>[<span class="pl-s"><span class="pl-pds">"</span>item-1<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>item-2<span class="pl-pds">"</span></span>]
 }); 
 <span class="pl-c">//追加绑定数据:</span>
-tp.bind({
+<span class="pl-smi">tp</span>.<span class="pl-en">bind</span>({
     template<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>list-template<span class="pl-pds">'</span></span>,
     element<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">'</span>list<span class="pl-pds">'</span></span>,
     model<span class="pl-k">:</span>[<span class="pl-s"><span class="pl-pds">"</span>item-1<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>item-2<span class="pl-pds">"</span></span>],
@@ -130,7 +130,7 @@ tp.bind({
 
 <p>结果:</p>
 
-<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">ul</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>list<span class="pl-pds">"</span></span>&gt;
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">ul</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>list<span class="pl-pds">"</span></span>&gt;
 &lt;<span class="pl-ent">li</span>&gt;item-1&lt;/<span class="pl-ent">li</span>&gt;
 &lt;<span class="pl-ent">li</span>&gt;item-2&lt;/<span class="pl-ent">li</span>&gt;
 &lt;/<span class="pl-ent">ul</span>&gt;</pre></div>
@@ -141,28 +141,28 @@ tp.bind({
 <h4>
 <a id="安装" class="anchor" href="#%E5%AE%89%E8%A3%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装</h4>
 
-<div class="highlight highlight-javascript"><pre>[sudo] npm install tpjs [<span class="pl-k">-</span>g]</pre></div>
+<div class="highlight highlight-source-js"><pre>[sudo] npm install tpjs [<span class="pl-k">-</span>g]</pre></div>
 
 <h4>
 <a id="引用" class="anchor" href="#%E5%BC%95%E7%94%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>引用</h4>
 
-<div class="highlight highlight-javascript"><pre><span class="pl-k">var</span> tp <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>tpjs<span class="pl-pds">'</span></span>);
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> tp <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>tpjs<span class="pl-pds">'</span></span>);
 
 <span class="pl-c">//解析</span>
-<span class="pl-k">var</span> rs <span class="pl-k">=</span> tp.<span class="pl-c1">parse</span>(html,options);
+<span class="pl-k">var</span> rs <span class="pl-k">=</span> <span class="pl-smi">tp</span>.<span class="pl-c1">parse</span>(html,options);
 <span class="pl-c">//预编译</span>
-<span class="pl-k">var</span> fn <span class="pl-k">=</span> tp.<span class="pl-c1">compile</span>(html,options);</pre></div>
+<span class="pl-k">var</span> fn <span class="pl-k">=</span> <span class="pl-smi">tp</span>.<span class="pl-c1">compile</span>(html,options);</pre></div>
 
 <h4>
 <a id="命令行工具" class="anchor" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7" aria-hidden="true"><span class="octicon octicon-link"></span></a>命令行工具</h4>
 
 <p>使用命令行工具需要全局安装 tpjs，如下</p>
 
-<div class="highlight highlight-javascript"><pre>[sudo] npm install tpjs <span class="pl-k">-</span>g</pre></div>
+<div class="highlight highlight-source-js"><pre>[sudo] npm install tpjs <span class="pl-k">-</span>g</pre></div>
 
 <p>CLI 说明</p>
 
-<div class="highlight highlight-javascript"><pre>tp <span class="pl-k">&lt;</span>src<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>dst<span class="pl-k">&gt;</span></pre></div>
+<div class="highlight highlight-source-js"><pre>tp <span class="pl-k">&lt;</span>src<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>dst<span class="pl-k">&gt;</span></pre></div>
 
 <ol>
 <li>src: 源文件路径，相对于当前工作目录</li>
