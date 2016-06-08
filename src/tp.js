@@ -1,4 +1,4 @@
-(function(owner) {
+(function (owner) {
     "use strict";
 
     //引擎版本
@@ -60,10 +60,10 @@
 
     //创建模板上下文句柄，即模块中的 $
     function createHandler(func, model, _extends) {
-        var handler = function(text) {
+        var handler = function (text) {
             handler.push(text);
         };
-        handler.push = function(text) {
+        handler.push = function (text) {
             handler.buffer.push(text);
         };
         for (var i in _extends) {
@@ -90,7 +90,7 @@
         //验证输出表达式
         var outCodeExp = new RegExp(codeBegin + '\\\s*=', 'gim');
         //--
-        var codeBuffer = [];
+        var codeBuffer = ['"use strict"'];
         var codeBlocks = source.match(codeExp) || [];
         var textBlocks = source.replace(codeExp, '▎').split('▎') || [];
         for (var i = 0; i < textBlocks.length; i++) {
@@ -110,18 +110,18 @@
         codeBuffer.push('return $.buffer.join("");');
         //构造模板函数
         //模板执行时，可以指定 execOptions, execOptions.extend 执行扩展仅对本次执行有效
-        var func = function(model, execOptions) {
+        var func = function (model, execOptions) {
             return func.exec(model, execOptions);
         };
         //编译模板函数
-        controlledExecute(function() {
+        controlledExecute(function () {
             func.src = new Function("$", "$$", codeBuffer.join(';'));
         }, "Template compile error");
         //生成执行函数
-        func.exec = function(model, execOptions) {
+        func.exec = function (model, execOptions) {
             execOptions = execOptions || {};
             var handler = createHandler(func, model, [gloablExtend, options.extend, execOptions.extend]);
-            return controlledExecute(function() {
+            return controlledExecute(function () {
                 //this 当前数据模型，$ 参数为 Handler，$$ 参数为当前数据模型
                 handler.result = (handler.func.src.call(handler.model, handler, handler.model) || '');
                 return execOptions.returnHandler ? handler : handler.result;
@@ -143,7 +143,7 @@
      * 编译模板时可以指定 options.extend 指定编译扩展
      * 编译扩展公针当前模板有效，无论第几次执行模板
      */
-    owner.compile = function(source, options) {
+    owner.compile = function (source, options) {
         return compile(source, options);
     };
 
@@ -152,7 +152,7 @@
      * options 为编译选项，编译模板时可以指定 options.extend 指定编译扩展
      * 模板执行时，可以指定execOptions, execOptions.extend 执行扩展仅对本次执行有效
      */
-    owner.parse = function(source, model, options, execOptions) {
+    owner.parse = function (source, model, options, execOptions) {
         var fn = compile(source, options);
         return fn(model, execOptions);
     };
@@ -168,10 +168,10 @@
      * 如果在浏览器环境，添加针对DOM的扩展方法；
      */
     if (typeof window !== 'undefined' && window.document) {
-        owner.query = function(id) {
+        owner.query = function (id) {
             return window.document.getElementById(id);
         };
-        owner.bind = function(options) {
+        owner.bind = function (options) {
             options = options || {};
             var query = options.query || owner.query;
             options.el = options.el || options.element;
@@ -188,7 +188,7 @@
         };
     }
 
-})((function() {
+})((function () {
     var owner = {};
     //支持CommonJS规范
     if (typeof exports !== 'undefined') {
@@ -200,7 +200,7 @@
     if (typeof define === 'function' && define.amd) {
         owner.env = owner.env || [];
         owner.env.push("amd");
-        define('tp', [], function() {
+        define('tp', [], function () {
             return owner;
         });
     }

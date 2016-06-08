@@ -1,7 +1,7 @@
 {
   "name": "tpjs",
   "rawName": "tp",
-  "version": "3.7.1",
+  "version": "3.7.2",
   "description": "最简洁高效的js模板引擎!",
   "main": "./lib/tp.js",
   "bin": {
