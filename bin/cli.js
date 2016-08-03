@@ -2,25 +2,27 @@
 
 var path = require('path');
 var fs = require('fs');
-var utils = require('real-utils');
-var CmdLine = require('cmdline');
+var utils = require('ntils');
+var cmdLine = require('cmdline');
 var pkg = require('../package.json');
 var compile = require('../lib/compile');
-var cmdLine = new CmdLine();
 var cwd = process.cwd();
 
-var src = cmdLine.args[0];
-var dst = cmdLine.args[1];
+var helpInfo = 'usage: tp <src> <dst>';
 
-if (cmdLine.options.has('-v')) {
-    console.log(pkg.rawName + ' ' + pkg.version);
-} else if (utils.isNull(src) || utils.isNull(dst)) {
-    console.log('usage: tp <src> <dst>');
-} else {
-    src = path.resolve(cwd, src);
-    dst = path.resolve(cwd, dst);
+cmdLine
+  .version(pkg.rawName + ' ' + pkg.version)
+  .help(helpInfo)
+  .handle({ arguments: true }, function ($0, $1) {
+    var src = path.resolve(cwd, $0);
+    var dst = path.resolve(cwd, $1);
     var funcName = path.basename(dst).split('.')[0];
     var srcBuffer = fs.readFileSync(src).toString();
     var dstBuffer = compile(funcName, srcBuffer);
     fs.writeFileSync(dst, dstBuffer);
-}
+    return false;
+  })
+  .handle(function () {
+    console.log(helpInfo);
+  })
+  .ready();
