@@ -33,8 +33,8 @@
     "url": "https://github.com/Houfeng/tp.git"
   },
   "dependencies": {
-    "cmdline": "0.0.5",
-    "real-utils": "0.0.1",
+    "cmdline": "^1.0.5",
+    "ntils": "^1.0.1",
     "uglify-js": "^2.4.24"
   },
   "devDependencies": {

@@ -18,50 +18,23 @@ var banner = ['/**',
     ''
 ].join('\r\n');
 
-gulp.task('clear_build', function(cb) {
+gulp.task('clear', function (cb) {
     del(['build'], cb);
 });
 
-gulp.task('clear_lib', function(cb) {
-    del(['lib'], cb);
-});
-
-gulp.task('clear_bin', function(cb) {
-    del(['bin'], cb);
-});
-
-gulp.task('clear', ['clear_build', 'clear_lib', 'clear_bin']);
-
-gulp.task('build', ["clear"], function() {
+gulp.task('build', ["clear"], function () {
     //tp
-    gulp.src("./src/tp.js")
+    gulp.src("./lib/tp.js")
         .pipe(replace('{{version}}', pkg.version))
         .pipe(header(banner, pkg))
         .pipe(gulp.dest("./build/"))
         .pipe(uglify())
         .pipe(header(banner, pkg))
-        .pipe(gulp.dest("./lib/"))
         .pipe(rename(pkg.rawName + ".min.js"))
         .pipe(gulp.dest("./build/"));
-    //compile.js
-    gulp.src("./src/compile.js")
-        .pipe(replace('{{version}}', pkg.version))
-        .pipe(uglify())
-        .pipe(header(banner, pkg))
-        .pipe(gulp.dest("./lib/"));
-    //compile.tp
-    gulp.src("./src/compile.tp")
-        .pipe(replace('{{version}}', pkg.version))
-        .pipe(gulp.dest("./lib/"));
-    //cli
-    gulp.src("./src/cli.js")
-        .pipe(replace('{{version}}', pkg.version))
-        .pipe(uglify())
-        .pipe(header('#!/usr/bin/env node\n'))
-        .pipe(gulp.dest("./bin/"));
 });
 
-gulp.task('readme', function(cb) {
+gulp.task('readme', function (cb) {
     gulp.src("./README.src.md")
         .pipe(replace('{{version}}', pkg.version))
         .pipe(rename("README.md"))
