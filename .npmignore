@@ -1,9 +1,0 @@
-
-.DS_Store
-node_modules
-src
-build
-
-README.src.md
-Gulpfile.js
-CNAME
