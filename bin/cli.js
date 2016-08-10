@@ -13,7 +13,7 @@ var helpInfo = 'usage: tp <src> <dst>';
 cmdLine
   .version(pkg.rawName + ' ' + pkg.version)
   .help(helpInfo)
-  .handle({ arguments: true }, function ($0, $1) {
+  .action(function ($1, $2) {
     var src = path.resolve(cwd, $0);
     var dst = path.resolve(cwd, $1);
     var funcName = path.basename(dst).split('.')[0];
@@ -21,8 +21,5 @@ cmdLine
     var dstBuffer = compile(funcName, srcBuffer);
     fs.writeFileSync(dst, dstBuffer);
     return false;
-  })
-  .handle(function () {
-    console.log(helpInfo);
   })
   .ready();
