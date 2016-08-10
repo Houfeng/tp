@@ -14,8 +14,8 @@ cmdLine
   .version(pkg.rawName + ' ' + pkg.version)
   .help(helpInfo)
   .action(function ($1, $2) {
-    var src = path.resolve(cwd, $0);
-    var dst = path.resolve(cwd, $1);
+    var src = path.resolve(cwd, $1);
+    var dst = path.resolve(cwd, $2);
     var funcName = path.basename(dst).split('.')[0];
     var srcBuffer = fs.readFileSync(src).toString();
     var dstBuffer = compile(funcName, srcBuffer);
