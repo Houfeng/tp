@@ -1,7 +1,7 @@
 {
   "name": "tpjs",
   "rawName": "tp",
-  "version": "3.8.1",
+  "version": "3.8.2",
   "description": "最简洁高效的js模板引擎!",
   "main": "./lib/tp.js",
   "bin": {
@@ -33,9 +33,9 @@
     "url": "https://github.com/Houfeng/tp.git"
   },
   "dependencies": {
-    "cmdline": "^1.1.7",
-    "ntils": "^1.0.2",
-    "uglify-js": "^2.7.0"
+    "cmdline": "^2.0.1",
+    "ntils": "^2.0.3",
+    "uglify-js": "^2.7.5"
   },
   "devDependencies": {
     "del": "^1.2.0",

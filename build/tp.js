@@ -1,6 +1,6 @@
 /**
  * tp.js - 最简洁高效的js模板引擎!
- * @version v3.8.1
+ * @version v3.8.2
  * @link http://houfeng.net/tp
  * @license MIT
  * @author Houfeng
@@ -10,7 +10,7 @@
   "use strict";
 
   //引擎版本
-  owner.version = '3.8.1';
+  owner.version = '3.8.2';
 
   //处理输出转义
   function outTransferred(text) {
